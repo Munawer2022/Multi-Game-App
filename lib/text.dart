@@ -27,7 +27,7 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 6),
+      duration: const Duration(seconds: 10),
     );
 
     _animationController.addListener(() {
