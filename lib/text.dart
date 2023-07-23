@@ -77,12 +77,16 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
               horse2Position: horse2Position,
               horse3Position: horse3Position,
             ),
-            Positioned(
-              right: -0,
-              bottom: -0,
+            Center(
               child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor)),
                 onPressed: _startRace,
-                child: Text(' Start Race'),
+                child: const Text(
+                  ' Start Race',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
@@ -106,84 +110,108 @@ class RaceTrack extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned(
-          left: 650,
-          child: Image.asset(
-            'assets/images/line.png',
-            scale: 5,
-            // color: Colors.red,
-          ),
+        Image.asset(
+          'assets/images/track.jpg',
+          height: 1200,
+          width: 1200,
+          fit: BoxFit.cover,
         ),
-        // Container(
-        //   width: 300,
-        //   height: 100,
-        //   decoration: BoxDecoration(
-        //     border: Border.all(color: Colors.black, width: 2),
+        // Positioned(
+        //   left: 650,
+        //   child: Image.asset(
+        //     'assets/images/line.png',
+
+        //     // color: Colors.red,
         //   ),
         // ),
-        Positioned(
-          top: 0,
-          left: horse1Position,
-          child: Column(
-            children: [
-              const CircleAvatar(
-                radius: 13,
-                child: Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(2.0),
-                  child: Text('1'),
-                )),
-              ),
-              Horse(),
-            ],
-          ),
-        ),
-        Positioned(
-          top: 30,
-          left: horse2Position,
-          child: Column(
-            children: [
-              const CircleAvatar(
-                radius: 13,
-                child: Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(2.0),
-                  child: Text('21'),
-                )),
-              ),
-              Horse(),
-            ],
-          ),
-        ),
-        Positioned(
-          top: 60,
-          left: horse3Position,
-          child: Column(
-            children: [
-              const CircleAvatar(
-                radius: 13,
-                child: Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(2.0),
-                  child: Text('11'),
-                )),
-              ),
-              Horse(),
-            ],
-          ),
-        ),
+        position(horse1Position, 200, '1'),
+        position(horse2Position, 230, '21'),
+        position(horse3Position, 260, '11'),
+        // Positioned(
+        //   top: 200,
+        //   left: horse1Position,
+        //   child: Column(
+        //     children: [
+        //       const CircleAvatar(
+        //         radius: 13,
+        //         child: Center(
+        //             child: Padding(
+        //           padding: EdgeInsets.all(2.0),
+        //           child: Text('1'),
+        //         )),
+        //       ),
+        //       Horse(),
+        //     ],
+        //   ),
+        // ),
+        // Positioned(
+        //   top: 230,
+        //   left: horse2Position,
+        //   child: Column(
+        //     children: [
+        //       const CircleAvatar(
+        //         radius: 13,
+        //         child: Center(
+        //             child: Padding(
+        //           padding: EdgeInsets.all(2.0),
+        //           child: Text('21'),
+        //         )),
+        //       ),
+        //       Horse(),
+        //     ],
+        //   ),
+        // ),
+        // Positioned(
+        //   top: 260,
+        //   left: horse3Position,
+        //   child: Column(
+        //     children: [
+        //       const CircleAvatar(
+        //         radius: 13,
+        //         child: Center(
+        //             child: Padding(
+        //           padding: EdgeInsets.all(2.0),
+        //           child: Text('11'),
+        //         )),
+        //       ),
+        //       Horse(),
+        //     ],
+        //   ),
+        // ),R
       ],
     );
   }
 }
 
 class Horse extends StatelessWidget {
+  const Horse({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 30,
+    return SizedBox(
+      width: 60,
+      height: 50,
       child: Image.asset('assets/images/horse.gif'), // Add your horse image
     );
   }
+}
+
+Widget position(horse3Position, double top, text) {
+  return Positioned(
+    top: top,
+    left: horse3Position,
+    child: Column(
+      children: [
+        CircleAvatar(
+          radius: 13,
+          child: Center(
+              child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Text(text),
+          )),
+        ),
+        const Horse(),
+      ],
+    ),
+  );
 }

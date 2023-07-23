@@ -1,134 +1,115 @@
+import 'dart:async';
+import 'dart:math';
+
+import 'package:animation/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
 
-class HourseRunning extends StatefulWidget {
-  const HourseRunning({super.key});
+class MyHomePage extends StatelessWidget {
+  final StreamController _dividerController = StreamController<int>();
 
-  @override
-  State<HourseRunning> createState() => _HourseRunningState();
-}
-
-class _HourseRunningState extends State<HourseRunning> {
-  Offset _end = Offset(600, 0);
+  dispose() {
+    _dividerController.close();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Positioned(
-              left: 650,
-              child: Image.asset(
-                'assets/images/line.png',
-                scale: 5,
-                // color: Colors.red,
-              ),
-            ),
-            TweenAnimationBuilder(
-              tween: BezierTween(
-                  begin: Offset(0, 0), control: Offset(0, 0), end: _end),
-              duration: Duration(seconds: 4),
-              builder: (BuildContext context, Offset value, Widget? child) {
-                return Positioned(
-                  left: value.dx,
-                  top: value.dy,
-                  child: Column(
-                    children: [
-                      Column(
-                        children: [
-                          Text('99'),
-                          Image.asset(
-                            'assets/images/horse.gif',
-                            // color: Colors.red,
-                            scale: 10,
-                          ),
-                        ],
+    return Scaffold(
+      backgroundColor: Color(0xffDDC3FF),
+      body: Stack(
+        children: [
+          Image.asset(
+            'assets/images/wheel_back.jpg',
+            height: 1200,
+            width: 1200,
+            fit: BoxFit.cover,
+            opacity: const AlwaysStoppedAnimation(.7),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Lucky Spinn',
+                  style: Theme.of(context).textTheme.headline5?.copyWith(
+                      color: Color(0xffFFF893),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  width: 310,
+                  height: 310,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 143, 121, 175),
+                        blurRadius: 17,
+                        offset: Offset(4, 8),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: value.dx * 1),
-                        child: Column(
-                          children: [
-                            Text('11'),
-                            Image.asset(
-                              'assets/images/horse.gif',
-                              // color: Colors.amber,
-                              scale: 10,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: value.dx * 1),
-                        child: Column(
-                          children: [
-                            Text('03'),
-                            Image.asset(
-                              'assets/images/horse.gif',
-                              // color: Colors.green,
-                              scale: 10,
-                            ),
-                          ],
-                        ),
-                      )
                     ],
                   ),
-                );
-              },
+                  child: SpinningWheel(
+                    Image.asset('assets/images/wheel_round.png'),
+                    width: 310,
+                    height: 310,
+                    initialSpinAngle: _generateRandomAngle(),
+                    spinResistance: 0.6,
+                    canInteractWhileSpinning: false,
+                    dividers: 8,
+                    onUpdate: _dividerController.add,
+                    onEnd: _dividerController.add,
+                    secondaryImage:
+                        Image.asset('assets/images/wheel_click.png'),
+                    secondaryImageHeight: 110,
+                    secondaryImageWidth: 110,
+                  ),
+                ),
+                SizedBox(height: 30),
+                StreamBuilder(
+                  stream: _dividerController.stream,
+                  builder: (context, snapshot) => snapshot.hasData
+                      ? Card(
+                          child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RouletteScore(snapshot.data),
+                        ))
+                      : Container(),
+                )
+              ],
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              _end = Offset.zero;
-            });
-          },
-        ),
+          ),
+        ],
       ),
     );
   }
+
+  double _generateRandomAngle() => Random().nextDouble() * pi * 2;
 }
 
-class BezierTween extends Tween<Offset> {
-  final Offset begin;
-  final Offset end;
-  final Offset control;
+class RouletteScore extends StatelessWidget {
+  final int selected;
 
-  BezierTween({required this.begin, required this.end, required this.control})
-      : super(begin: begin, end: end);
+  final Map<int, String> labels = {
+    1: '1000\$',
+    2: '400\$',
+    3: '800\$',
+    4: '7000\$',
+    5: '5000\$',
+    6: '300\$',
+    7: '2000\$',
+    8: '100\$',
+  };
+
+  RouletteScore(this.selected);
 
   @override
-  Offset lerp(double t) {
-    final t1 = 1 - t;
-    return begin * t1 * t1 + control * 2 * t1 * t + end * t * t;
+  Widget build(BuildContext context) {
+    return Text('${labels[selected]}',
+        style: TextStyle(fontStyle: FontStyle.italic, fontSize: 24.0));
   }
 }
-// Positioned(
-//                   left: value.dx,
-//                   top: value.dy,
-//                   child: Column(
-//                     children: [
-//                       Image.asset(
-//                         'assets/images/horse.gif',
-//                         // color: Colors.red,
-//                         scale: 10,
-//                       ),
-//                       Padding(
-//                         padding: const EdgeInsets.only(left: 50),
-//                         child: Image.asset(
-//                           'assets/images/horse.gif',
-//                           // color: Colors.amber,
-//                           scale: 10,
-//                         ),
-//                       ),
-//                       Padding(
-//                         padding: const EdgeInsets.only(right: 50),
-//                         child: Image.asset(
-//                           'assets/images/horse.gif',
-//                           // color: Colors.amber,
-//                           scale: 10,
-//                         ),
-//                       )
-//                     ],
-//                   ),
-//                 );
