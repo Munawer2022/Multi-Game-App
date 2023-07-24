@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'dashboard.dart';
 import 'hourse_running.dart';
@@ -15,7 +16,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(useMaterial3: true, primarySwatch: Colors.deepPurple),
+        themeMode: ThemeMode.dark,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          useMaterial3: true,
+          primarySwatch: Colors.deepPurple,
+          // textTheme: GoogleFonts.sacramentoTextTheme(
+          //   Theme.of(context).textTheme,
+          // ),
+        ),
         home: Dahboard());
   }
 }

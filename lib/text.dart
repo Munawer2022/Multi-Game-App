@@ -114,7 +114,7 @@ class RaceTrack extends StatelessWidget {
           'assets/images/track.jpg',
           height: 1200,
           width: 1200,
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
         // Positioned(
         //   left: 650,
