@@ -56,13 +56,13 @@ class _HorseBidState extends State<HorseBid> {
     var sized = MediaQuery.of(context);
 
     List<String> options = [
-      "20",
-      "30",
-      "40",
-      "50",
-      "60",
-      "70",
-      "80",
+      "500",
+      "1000",
+      "1500",
+      "2000",
+      "2500",
+      "3000",
+      "3500",
 
       // Add more options here...
     ];
@@ -196,6 +196,12 @@ class _HorseBidState extends State<HorseBid> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ChoiceChip(
+                          labelPadding: EdgeInsets.symmetric(horizontal: 20),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.horizontal(
+                                  left: Radius.circular(20),
+                                  right: Radius.circular(20))),
+
                           label: Text(options[index]),
                           selected: isSelected[index],
                           onSelected: (selected) {
