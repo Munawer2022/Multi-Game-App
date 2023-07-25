@@ -2,18 +2,40 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
+import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
+import 'package:neopop/widgets/shimmer/neopop_shimmer.dart';
 
-import 'package:google_fonts/google_fonts.dart';
+class LuckySpinnWheel extends StatefulWidget {
+  const LuckySpinnWheel({super.key});
 
-class MyHomePage extends StatelessWidget {
+  @override
+  State<LuckySpinnWheel> createState() => _LuckySpinnWheelState();
+}
+
+class _LuckySpinnWheelState extends State<LuckySpinnWheel> {
   final StreamController _dividerController = StreamController<int>();
 
-  MyHomePage({super.key});
+  final _wheelNotifier = StreamController<double>();
 
+  @override
   dispose() {
+    super.dispose();
     _dividerController.close();
+    _wheelNotifier.close();
   }
+
+  // int _lastWinNumber = 1;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _dividerController.stream.listen((selected) {
+  //     setState(() {
+  //       _lastWinNumber = selected;
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +56,7 @@ class MyHomePage extends StatelessWidget {
               children: [
                 Text(
                   'Lucky Spinn',
-                  style: GoogleFonts.gamjaFlower().copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: const Color(0xffFFF893),
                       fontSize: 50,
                       fontWeight: FontWeight.w900),
@@ -44,7 +66,7 @@ class MyHomePage extends StatelessWidget {
                   //     fontWeight: FontWeight.w900),
                 ),
                 const SizedBox(
-                  height: 60,
+                  height: 10,
                 ),
                 Center(
                   child: Stack(
@@ -53,9 +75,6 @@ class MyHomePage extends StatelessWidget {
                       Center(
                         child: Image.asset(
                           'assets/images/wheel_back_light.png',
-                          height: 450,
-                          width: 450,
-                          fit: BoxFit.cover,
                         ),
                       ),
                       SpinningWheel(
@@ -65,7 +84,7 @@ class MyHomePage extends StatelessWidget {
                         width: 310,
                         height: 310,
                         initialSpinAngle: _generateRandomAngle(),
-                        spinResistance: 0.6,
+                        spinResistance: 0.1,
                         canInteractWhileSpinning: false,
                         dividers: 8,
                         onUpdate: _dividerController.add,
@@ -74,11 +93,13 @@ class MyHomePage extends StatelessWidget {
                             Image.asset('assets/images/wheel_click.png'),
                         secondaryImageHeight: 110,
                         secondaryImageWidth: 110,
+                        shouldStartOrStop: _wheelNotifier.stream,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 50),
+
+                const SizedBox(height: 10),
                 StreamBuilder(
                   stream: _dividerController.stream,
                   builder: (context, snapshot) => snapshot.hasData
@@ -86,7 +107,47 @@ class MyHomePage extends StatelessWidget {
                           snapshot.data,
                         )
                       : Container(),
-                )
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: NeoPopButton(
+                    color: Colors.red,
+                    onTapUp: () {
+                      _wheelNotifier.sink.add(_generateRandomVelocity());
+                      HapticFeedback.vibrate();
+                    },
+                    onTapDown: () => HapticFeedback.vibrate(),
+                    child: NeoPopShimmer(
+                      shimmerColor: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "SPIN",
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // GestureDetector(
+                //   onTap: () =>
+                //       _wheelNotifier.sink.add(_generateRandomVelocity()),
+                //   child: Container(
+                //     height: 40,
+                //     width: 120,
+                //     color: Colors.redAccent,
+                //     child: Center(
+                //       child: Text("SPIN"),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -95,6 +156,8 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
+  double _generateRandomVelocity() => (Random().nextDouble() * 6000) + 2000;
+
   double _generateRandomAngle() => Random().nextDouble() * pi * 2;
 }
 
@@ -102,18 +165,14 @@ class RouletteScore extends StatelessWidget {
   final int selected;
 
   final Map<int, String> labels = {
-    1: '100k',
-    2: '800k',
-    3: '50k',
-    4: '600k',
-    5: '10k',
-    6: 'ZONK',
-    7: '20k',
-    8: '1000k',
-    // 9: '5k',
-    // 10: 'ZONK',
-    // 11: '1k',
-    // 12: 'JACKPORT',
+    1: '1000\$',
+    2: '400\$',
+    3: '800\$',
+    4: '7000\$',
+    5: '5000\$',
+    6: '300\$',
+    7: '2000\$',
+    8: '100\$',
   };
 
   RouletteScore(this.selected, {super.key});
@@ -124,7 +183,7 @@ class RouletteScore extends StatelessWidget {
         style: const TextStyle(
           fontStyle: FontStyle.italic,
           fontWeight: FontWeight.bold,
-          fontSize: 24.0,
+          fontSize: 36.0,
           color: Color(0xffFFF893),
         ));
   }

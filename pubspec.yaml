@@ -33,7 +33,10 @@ dependencies:
     sdk: flutter
   flutter_fortune_wheel:
   flutter_spinning_wheel:
-  google_fonts:
+  rxdart:
+  neopop: ^1.0.2
+  intl:
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -78,15 +81,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: BebasNeue
+      fonts:
+        - asset: assets/fonts/BebasNeue-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+    - family: Open Sans
+      fonts:
+        - asset: assets/fonts/OpenSans_Condensed-Regular.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

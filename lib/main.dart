@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'dashboard.dart';
-import 'hourse_running.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         theme: ThemeData(
-          brightness: Brightness.dark,
+          fontFamily: 'BebasNeue',
+          brightness: Brightness.light,
           useMaterial3: true,
-          primarySwatch: Colors.deepPurple,
+          colorSchemeSeed: Colors.blueAccent.withOpacity(0.7),
           // textTheme: GoogleFonts.sacramentoTextTheme(
           //   Theme.of(context).textTheme,
           // ),
         ),
-        home: Dahboard());
+        home: const Dahboard());
   }
 }

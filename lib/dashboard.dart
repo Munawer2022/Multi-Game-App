@@ -1,10 +1,9 @@
-import 'package:animation/text.dart';
+import 'package:animation/horse/horse_bid.dart';
+import 'package:animation/horse/horse_race.dart';
 import 'package:animation/wheel_game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'hourse_running.dart';
+import 'lucky_spinn_wheel.dart';
 
 class Dahboard extends StatelessWidget {
   const Dahboard({super.key});
@@ -13,52 +12,6 @@ class Dahboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.black54,
-        //   elevation: 0,
-        //   actions: [
-        //     IconButton(
-        //         onPressed: () {}, icon: Icon(CupertinoIcons.cart_badge_plus))
-        //   ],
-        // ),
-        // appBar: PreferredSize(
-        //   preferredSize: Size.fromHeight(120.0),
-        //   child: AppBar(
-        //     toolbarHeight: 120.0,
-        //     centerTitle: true,
-        //     title: Text(
-        //       'Dashboard',
-        //       style: GoogleFonts.bahiana()
-        //           .copyWith(fontSize: 50, color: Colors.white),
-        //     ),
-        //     leading: IconButton(
-        //         onPressed: () {},
-        //         icon: CircleAvatar(
-        //             radius: 40,
-        //             backgroundColor: Color(0xff3F4373),
-        //             child: Center(child: Icon(CupertinoIcons.person)))),
-        //     actions: [
-        //       IconButton(
-        //           onPressed: () {},
-        //           icon: CircleAvatar(
-        //               maxRadius: 30,
-        //               backgroundColor: Color(0xff3F4373),
-        //               child:
-        //                   Center(child: Icon(CupertinoIcons.cart_badge_plus))))
-        //     ],
-        //     flexibleSpace: Container(
-        //       decoration: const BoxDecoration(
-        //         gradient: LinearGradient(
-        //             begin: Alignment.topCenter,
-        //             end: Alignment.bottomCenter,
-        //             colors: <Color>[
-        //               Color.fromARGB(255, 4, 9, 58),
-        //               Color(0xff05092C)
-        //             ]),
-        //       ),
-        //     ),
-        //   ),
-        // ),
         body: Center(
           child: Stack(
             children: [
@@ -74,6 +27,7 @@ class Dahboard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
@@ -81,22 +35,24 @@ class Dahboard extends StatelessWidget {
                             icon: CircleAvatar(
                                 maxRadius: 30,
                                 backgroundColor: Colors.white.withOpacity(0.3),
-                                child: Center(
+                                child: const Center(
                                     child: Icon(
                                   CupertinoIcons.cart_badge_plus,
                                   color: Colors.white,
                                 )))),
                         Text(
                           'Dashboard',
-                          style: GoogleFonts.bahiana()
-                              .copyWith(fontSize: 50, color: Colors.white),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall
+                              ?.copyWith(color: Colors.white),
                         ),
                         IconButton(
                             onPressed: () {},
                             icon: CircleAvatar(
                                 maxRadius: 30,
                                 backgroundColor: Colors.white.withOpacity(0.3),
-                                child: Center(
+                                child: const Center(
                                     child: Icon(
                                   CupertinoIcons.cart_badge_plus,
                                   color: Colors.white,
@@ -110,20 +66,20 @@ class Dahboard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             container(context, 'assets/images/horse.jpg',
-                                HorseRaceScreen()),
-                            SizedBox(
+                                const HorseBid()),
+                            const SizedBox(
                               width: 10,
                             ),
-                            container(
-                                context, 'assets/images/cat.jpg', MyHomePage()),
+                            container(context, 'assets/images/cat.jpg',
+                                LuckySpinnWheel()),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Center(
                             child: container(context,
-                                'assets/images/wheel.jpeg', WheelGame())),
+                                'assets/images/wheel.jpeg', const WheelGame())),
                       ],
                     ),
 
@@ -177,12 +133,14 @@ class Dahboard extends StatelessWidget {
                     // ),
                     Center(
                       child: Text(
-                        'Game Zone',
-                        style: GoogleFonts.bahiana()
-                            .copyWith(fontSize: 70, color: Colors.white),
+                        'Game Zone\n          -',
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge
+                            ?.copyWith(color: Colors.white),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 0,
                     )
                   ],
