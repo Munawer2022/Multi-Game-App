@@ -54,58 +54,70 @@ class _HorseBidState extends State<HorseBid> {
 
     var theme = Theme.of(context);
     var sized = MediaQuery.of(context);
-    String selectedCategory = '';
+
+    List<String> options = [
+      "20",
+      "30",
+      "40",
+      "50",
+      "60",
+      "70",
+      "80",
+
+      // Add more options here...
+    ];
+    List<bool> isSelected = List.generate(options.length, (_) => false);
 
     return Scaffold(
-      body: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                leading: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      CupertinoIcons.back,
-                      color: Colors.white,
-                    )),
+        body: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  leading: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        CupertinoIcons.back,
+                        color: Colors.white,
+                      )),
 
-                automaticallyImplyLeading: false,
-                flexibleSpace: Stack(
-                  children: [
-                    Image.asset(
-                      'assets/images/horse_bid_back.jpg',
-                      height: double.infinity,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('$hours:$minutes:$seconds',
-                              style: theme.textTheme.displayLarge
-                                  ?.copyWith(color: Colors.white)),
-                          Text('Betting Starts',
-                              style: theme.textTheme.headline6
-                                  ?.copyWith(color: Colors.white))
-                        ],
+                  automaticallyImplyLeading: false,
+                  flexibleSpace: Stack(
+                    children: [
+                      Image.asset(
+                        'assets/images/horse_bid_back.jpg',
+                        height: double.infinity,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                  ],
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('$hours:$minutes:$seconds',
+                                style: theme.textTheme.displayLarge
+                                    ?.copyWith(color: Colors.white)),
+                            Text('Betting Starts',
+                                style: theme.textTheme.headline6
+                                    ?.copyWith(color: Colors.white))
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  // title: const Text('NestedScrollView'),
+                  pinned: false,
+                  expandedHeight: 400.0,
+                  forceElevated: innerBoxIsScrolled,
                 ),
-                // title: const Text('NestedScrollView'),
-                pinned: false,
-                expandedHeight: 400.0,
-                forceElevated: innerBoxIsScrolled,
-              ),
-            ];
-          },
-          body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
+              ];
+            },
+            body: Padding(
+              padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
+              child: Column(children: [
                 Center(
                   child: Container(
                     height: 5,
@@ -122,33 +134,48 @@ class _HorseBidState extends State<HorseBid> {
                     Expanded(
                       child: Text('Horse race name',
                           style:
-                              TextStyle(fontFamily: 'Open Sans', fontSize: 20)),
+                              TextStyle(fontFamily: 'Open Sans', fontSize: 16)),
                     ),
                     Text('Minimum bidding',
                         style:
-                            TextStyle(fontFamily: 'Open Sans', fontSize: 20)),
+                            TextStyle(fontFamily: 'Open Sans', fontSize: 16)),
                   ],
                 ),
-                SizedBox(height: sized.size.height * 0.01),
+                // SizedBox(height: sized.size.height * 0.01),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Text('Wednesday Horse',
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                          maxLines: 2,
                           softWrap: false,
-                          style: theme.textTheme.displaySmall?.copyWith(
+                          style: theme.textTheme.headline4?.copyWith(
                               fontFamily: 'Open Sans',
                               color: theme.primaryColor.withOpacity(0.7))
                           // ?.copyWith(color: Colors.black87),
                           ),
                     ),
                     SizedBox(width: sized.size.width * 0.03),
-                    Text('\$500',
-                        style: theme.textTheme.displaySmall?.copyWith(
-                            fontFamily: 'Open Sans',
-                            color: theme.primaryColor.withOpacity(0.7))),
+                    Row(
+                      children: [
+                        Card(
+                            child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Image.asset(
+                              'assets/images/coin.png',
+                              scale: 22,
+                            ),
+                          ),
+                        )),
+                        SizedBox(width: sized.size.width * 0.01),
+                        Text('500',
+                            style: theme.textTheme.headline4?.copyWith(
+                                fontFamily: 'Open Sans',
+                                color: theme.primaryColor.withOpacity(0.7))),
+                      ],
+                    ),
                   ],
                 ),
                 // SizedBox(height: sized.size.height * 0.15),
@@ -162,44 +189,66 @@ class _HorseBidState extends State<HorseBid> {
                     style: theme.textTheme.titleMedium
                         ?.copyWith(fontFamily: 'Open Sans', fontSize: 18)),
                 SizedBox(height: sized.size.height * 0.02),
-                Container(
-                  decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 1.0, style: BorderStyle.solid),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: DropdownButton<String>(
-                      items: <String>['500', '1000', '5443', '453480']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      hint: Text(
-                        selectedCategory.isEmpty
-                            ? 'Select coins'
-                            : selectedCategory,
-                        style: TextStyle(
-                          fontFamily: 'Open Sans',
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Wrap(
+                    children: List.generate(options.length, (index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ChoiceChip(
+                          label: Text(options[index]),
+                          selected: isSelected[index],
+                          onSelected: (selected) {
+                            setState(() {
+                              isSelected[index] = selected;
+                            });
+                          },
+                          // Customize the appearance of the chip here (optional).
+                          // You can use properties like backgroundColor, labelStyle, etc.
                         ),
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                      underline: SizedBox(),
-                      isExpanded: true,
-                      onChanged: (value) {
-                        if (value != null) {
-                          setState(() {
-                            selectedCategory = value;
-                          });
-                        }
-                      },
-                    ),
+                      );
+                    }),
                   ),
                 ),
+
+                // Container(
+                //   decoration: const ShapeDecoration(
+                //     shape: RoundedRectangleBorder(
+                //       side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                //       borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                //     ),
+                //   ),
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                //     child: DropdownButton<String>(
+                //       items: <String>['500', '1000', '5443', '453480']
+                //           .map((String value) {
+                //         return DropdownMenuItem<String>(
+                //           value: value,
+                //           child: Text(value),
+                //         );
+                //       }).toList(),
+                //       hint: Text(
+                //         selectedCategory.isEmpty
+                //             ? 'Select coins'
+                //             : selectedCategory,
+                //         style: TextStyle(
+                //           fontFamily: 'Open Sans',
+                //         ),
+                //       ),
+                //       borderRadius: BorderRadius.circular(10),
+                //       underline: SizedBox(),
+                //       isExpanded: true,
+                //       onChanged: (value) {
+                //         if (value != null) {
+                //           setState(() {
+                //             selectedCategory = value;
+                //           });
+                //         }
+                //       },
+                //     ),
+                //   ),
+                // ),
 
                 SizedBox(height: sized.size.height * 0.04),
                 SizedBox(
@@ -238,14 +287,19 @@ class _HorseBidState extends State<HorseBid> {
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-          )),
-    );
+                ),
+              ]),
+            )));
   }
 
   String _formatTime(int time) {
     return time.toString().padLeft(2, '0');
   }
+}
+
+class Data {
+  String label;
+  Color color;
+
+  Data(this.label, this.color);
 }
