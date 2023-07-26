@@ -2,18 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:neopop/utils/color_utils.dart';
+
 import 'package:provider/provider.dart';
 
-class HorseBid extends StatefulWidget {
-  const HorseBid({super.key});
+class SpinnWheelBid extends StatefulWidget {
+  const SpinnWheelBid({super.key});
 
   @override
-  State<HorseBid> createState() => _HorseBidState();
+  State<SpinnWheelBid> createState() => _SpinnWheelBidState();
 }
 
-class _HorseBidState extends State<HorseBid> {
+class _SpinnWheelBidState extends State<SpinnWheelBid> {
   int hours = 1;
   int minutes = 60;
   int seconds = 0;
@@ -109,7 +108,7 @@ class _HorseBidState extends State<HorseBid> {
                   flexibleSpace: Stack(
                     children: [
                       Image.asset(
-                        'assets/images/horse_bid_back.jpg',
+                        'assets/images/wheel_back.jpg',
                         height: double.infinity,
                         width: double.infinity,
                         fit: BoxFit.cover,
@@ -139,8 +138,8 @@ class _HorseBidState extends State<HorseBid> {
                 ),
               ];
             },
-            body:
-                Consumer<HorseBidController>(builder: (context, value, child) {
+            body: Consumer<SpinnWheelBidController>(
+                builder: (context, value, child) {
               return SingleChildScrollView(
                 child: Column(children: [
                   SizedBox(height: sized.size.height * 0.01),
@@ -149,7 +148,7 @@ class _HorseBidState extends State<HorseBid> {
                       height: 5,
                       width: 40,
                       decoration: BoxDecoration(
-                          color: theme.primaryColor.withOpacity(.5),
+                          color: spinnWheelColor.withOpacity(.5),
                           borderRadius: BorderRadius.circular(80)),
                     ),
                   ),
@@ -160,7 +159,7 @@ class _HorseBidState extends State<HorseBid> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Text('Race name',
+                          child: Text('Wheel name',
                               style: theme.textTheme.titleMedium),
                         ),
                         Text('Minimum bidding',
@@ -174,13 +173,13 @@ class _HorseBidState extends State<HorseBid> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Text('Wednesday Horse',
+                          child: Text('Wednesday Spinn Wheel',
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               softWrap: false,
                               style: theme.textTheme.headline4?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: theme.primaryColor.withOpacity(0.7))
+                                  color: spinnWheelColor)
                               // ?.copyWith(color: Colors.black87),
                               ),
                         ),
@@ -197,15 +196,14 @@ class _HorseBidState extends State<HorseBid> {
                             Text(options[value._value],
                                 style: theme.textTheme.headline4?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color:
-                                        theme.primaryColor.withOpacity(0.7))),
+                                    color: spinnWheelColor)),
                           ],
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: sized.size.height * 0.03),
-                  Text('Select your lucky horse number',
+                  Text('Select your lucky spinn wheel number',
                       style: theme.textTheme.bodyLarge),
                   SizedBox(height: sized.size.height * 0.02),
                   SizedBox(
@@ -220,6 +218,8 @@ class _HorseBidState extends State<HorseBid> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: ChoiceChip(
+                                  selectedColor:
+                                      spinnWheelColor.withOpacity(.3),
                                   shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.horizontal(
                                           left: Radius.circular(20),
@@ -227,8 +227,8 @@ class _HorseBidState extends State<HorseBid> {
                                   label: Row(
                                     children: [
                                       Image.asset(
-                                        'assets/images/horse_num.png',
-                                        color: theme.primaryColor,
+                                        'assets/images/wheel_num.png',
+                                        // color: spinnWheelColor,
                                         scale: 25,
                                       ),
                                       SizedBox(width: sized.size.width * 0.01),
@@ -261,6 +261,8 @@ class _HorseBidState extends State<HorseBid> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: ChoiceChip(
+                                  selectedColor:
+                                      spinnWheelColor.withOpacity(.3),
                                   shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.horizontal(
                                           left: Radius.circular(20),
@@ -309,8 +311,8 @@ class _HorseBidState extends State<HorseBid> {
                         ),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  theme.primaryColor.withOpacity(0.7))),
+                              backgroundColor:
+                                  MaterialStateProperty.all(spinnWheelColor)),
                           onPressed: () {},
                           child: Center(
                             child: Text(
@@ -334,9 +336,9 @@ class _HorseBidState extends State<HorseBid> {
 }
 
 var bidHorsePadding = const EdgeInsets.symmetric(horizontal: 15);
-Color bidHorseColor = Colors.brown.withOpacity(0.7);
+Color spinnWheelColor = Color.fromARGB(255, 233, 162, 80);
 
-class HorseBidController extends ChangeNotifier {
+class SpinnWheelBidController extends ChangeNotifier {
   int _value = 0;
   int get value => _value;
 

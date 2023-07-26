@@ -1,9 +1,17 @@
+import 'package:animation/horse/horse_bid.dart';
+import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'dashboard.dart';
+import 'dog_race/dog_race_bid.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => HorseBidController()),
+    ChangeNotifierProvider(create: (_) => SpinnWheelBidController()),
+    ChangeNotifierProvider(create: (_) => DogRaceBidController()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,10 +23,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
         theme: ThemeData(
-          fontFamily: 'BebasNeue',
+          fontFamily: 'Open Sans',
           brightness: Brightness.light,
           useMaterial3: true,
-          colorSchemeSeed: Colors.blueAccent.withOpacity(0.7),
+          colorSchemeSeed: Colors.brown.withOpacity(0.7),
           // textTheme: GoogleFonts.sacramentoTextTheme(
           //   Theme.of(context).textTheme,
           // ),

@@ -1,9 +1,11 @@
 import 'package:animation/horse/horse_bid.dart';
 import 'package:animation/horse/horse_race.dart';
-import 'package:animation/wheel_game.dart';
+import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
+import 'package:animation/spinn_wheel/wheel_game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'lucky_spinn_wheel.dart';
+import 'dog_race/dog_race_bid.dart';
+import 'spinn_wheel/lucky_spinn_wheel.dart';
 
 class Dahboard extends StatelessWidget {
   const Dahboard({super.key});
@@ -45,7 +47,8 @@ class Dahboard extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .displaySmall
-                              ?.copyWith(color: Colors.white),
+                              ?.copyWith(
+                                  color: Colors.white, fontFamily: 'BebasNeue'),
                         ),
                         IconButton(
                             onPressed: () {},
@@ -71,15 +74,17 @@ class Dahboard extends StatelessWidget {
                               width: 10,
                             ),
                             container(context, 'assets/images/cat.jpg',
-                                LuckySpinnWheel()),
+                                const DogRaceBid()),
                           ],
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         Center(
-                            child: container(context,
-                                'assets/images/wheel.jpeg', const WheelGame())),
+                            child: container(
+                                context,
+                                'assets/images/wheel.jpeg',
+                                const SpinnWheelBid())),
                       ],
                     ),
 
@@ -137,7 +142,8 @@ class Dahboard extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .displayLarge
-                            ?.copyWith(color: Colors.white),
+                            ?.copyWith(
+                                color: Colors.white, fontFamily: 'BebasNeue'),
                       ),
                     ),
                     const SizedBox(
@@ -377,13 +383,13 @@ Widget container(BuildContext context, image, page) {
           image: ExactAssetImage(image),
           fit: BoxFit.cover,
         ),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 17,
-            // offset: Offset(4, 8),
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.withOpacity(.2),
+        //     blurRadius: 13,
+        //     offset: Offset(-4, 8),
+        //   ),
+        // ],
       ),
     ),
   );

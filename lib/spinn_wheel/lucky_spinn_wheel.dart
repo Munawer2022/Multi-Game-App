@@ -56,9 +56,8 @@ class _LuckySpinnWheelState extends State<LuckySpinnWheel> {
               children: [
                 Text(
                   'Lucky Spinn',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
                       color: const Color(0xffFFF893),
-                      fontSize: 50,
                       fontWeight: FontWeight.w900),
                   // style: Theme.of(context).textTheme.headline5?.copyWith(
                   //     color: Color(0xffFFF893),
@@ -128,7 +127,10 @@ class _LuckySpinnWheelState extends State<LuckySpinnWheel> {
                           children: [
                             Text(
                               "SPIN",
-                              style: Theme.of(context).textTheme.titleLarge,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(color: Colors.white),
                             ),
                           ],
                         ),
