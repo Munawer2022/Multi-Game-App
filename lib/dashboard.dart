@@ -69,7 +69,7 @@ class Dahboard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             container(context, 'assets/images/horse.jpg',
-                                const HorseBid()),
+                                const HorseRaceScreen()),
                             const SizedBox(
                               width: 10,
                             ),

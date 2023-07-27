@@ -1,6 +1,13 @@
 import 'dart:math';
 
+import 'package:animation/dashboard.dart';
+import 'package:animation/horse/detail_screen.dart';
+import 'package:animation/navigate.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ticket_widget/ticket_widget.dart';
+
+import '../ticket_data.dart';
 
 class HorseRaceScreen extends StatefulWidget {
   const HorseRaceScreen({super.key});
@@ -19,14 +26,13 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
   late int random1;
   late int random2;
   late int random3;
+
   @override
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 10),
-    );
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
 
     _animationController.addListener(() {
       setState(() {
@@ -38,6 +44,60 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         isRaceInProgress = false;
+
+        showCupertinoDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Column(
+                children: [
+                  const CircleAvatar(
+                    child: Center(child: Text('1')),
+                  ),
+                  SizedBox(
+                    width: 60,
+                    height: 50,
+                    child: Image.asset(
+                        'assets/images/horse.gif'), // Add your horse image
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Your Horse ',
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: 'WON',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                color: Colors.green.shade700)),
+                        const TextSpan(
+                          text: ' The Race',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              content: const Text("Check out for more detail"),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  child: const Text("CANCEL"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                CupertinoDialogAction(
+                  child: const Text("DETAIL"),
+                  onPressed: () {
+                    // Navigator.of(context).pop();
+                    AppNavigator().push(context, const DetailScreen());
+                  },
+                ),
+              ],
+            );
+          },
+        );
       }
     });
   }

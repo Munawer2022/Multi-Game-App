@@ -133,7 +133,7 @@ class _HorseBidState extends State<HorseBid> {
                   ),
                   // title: const Text('NestedScrollView'),
                   pinned: false,
-                  expandedHeight: sized.size.height * 0.4,
+                  expandedHeight: sized.size.height * 0.5,
                   //400
                   forceElevated: innerBoxIsScrolled,
                 ),
