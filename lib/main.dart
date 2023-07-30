@@ -1,6 +1,9 @@
 import 'package:animation/horse/horse_bid.dart';
+import 'package:animation/spinn_wheel/lucky_spinn_wheel.dart';
 import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
+import 'package:animation/spinn_wheel/wheel_game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
 import 'package:provider/provider.dart';
 
 import 'dashboard.dart';
@@ -31,6 +34,6 @@ class MyApp extends StatelessWidget {
           //   Theme.of(context).textTheme,
           // ),
         ),
-        home: const Dahboard());
+        home: Dahboard());
   }
 }

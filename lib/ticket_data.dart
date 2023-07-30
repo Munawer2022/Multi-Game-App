@@ -1,46 +1,118 @@
 import 'package:flutter/material.dart';
 
-class DialogInsetDefeat extends StatelessWidget {
-  final BuildContext context;
-  final Widget child;
-  final deInset = EdgeInsets.symmetric(horizontal: -40, vertical: -24);
-  final EdgeInsets edgeInsets;
-
-  DialogInsetDefeat(
-      {required this.context, required this.child, required this.edgeInsets});
+class MyTicketView extends StatelessWidget {
+  const MyTicketView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var netEdgeInsets = deInset + (edgeInsets ?? EdgeInsets.zero);
-    return MediaQuery(
-      data: MediaQuery.of(context).copyWith(viewInsets: netEdgeInsets),
-      child: child,
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TicketWidget(
+              color: Colors.grey.shade300,
+              width: 300,
+              height: 330,
+              isCornerRounded: true,
+              padding: const EdgeInsets.all(20),
+              child: const TicketData(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-/// Displays a Material dialog using the above DialogInsetDefeat class.
-/// Meant to be a drop-in replacement for showDialog().
-///
-/// See also:
-///
-///  * [Dialog], on which [SimpleDialog] and [AlertDialog] are based.
-///  * [showDialog], which allows for customization of the dialog popup.
-///  * <https://material.io/design/components/dialogs.html>
-Future showDialogWithInsets<T>({
-  required BuildContext context,
-  bool barrierDismissible = true,
-  required WidgetBuilder builder,
-  required EdgeInsets edgeInsets,
-}) {
-  return showDialog(
-    context: context,
-    builder: (_) => DialogInsetDefeat(
-      context: context,
-      edgeInsets: edgeInsets,
-      child: Builder(builder: builder),
-    ),
-    // Edited! barrierDismissible: barrierDismissible = true,
-    barrierDismissible: barrierDismissible,
-  );
+class TicketData extends StatelessWidget {
+  const TicketData({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [],
+    );
+  }
+}
+
+class TicketWidget extends StatefulWidget {
+  const TicketWidget({
+    Key? key,
+    required this.width,
+    required this.height,
+    required this.child,
+    this.padding,
+    this.margin,
+    this.color = Colors.white,
+    this.isCornerRounded = false,
+    this.shadow,
+  }) : super(key: key);
+
+  final double width;
+  final double height;
+  final Widget child;
+  final Color color;
+  final bool isCornerRounded;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final List<BoxShadow>? shadow;
+
+  @override
+  _TicketWidgetState createState() => _TicketWidgetState();
+}
+
+class _TicketWidgetState extends State<TicketWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: TicketClipper(),
+      child: AnimatedContainer(
+        child: widget.child,
+        duration: const Duration(seconds: 1),
+        width: widget.width,
+        height: widget.height,
+        padding: widget.padding,
+        margin: widget.margin,
+        decoration: BoxDecoration(
+          // image: DecorationImage(
+          //   image: AssetImage(
+          //     'assets/images/horse_bid_back.jpg',
+          //   ),
+          //   fit: BoxFit.cover,
+          // ),
+          boxShadow: widget.shadow,
+          color: widget.color,
+          borderRadius: widget.isCornerRounded
+              ? BorderRadius.circular(20.0)
+              : BorderRadius.circular(0.0),
+        ),
+      ),
+    );
+  }
+}
+
+class TicketClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+
+    path.lineTo(0.0, size.height);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, 0.0);
+
+    path.addOval(
+        Rect.fromCircle(center: Offset(0.0, size.height / 2), radius: 20.0));
+    path.addOval(Rect.fromCircle(
+        center: Offset(size.width, size.height / 2), radius: 20.0));
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

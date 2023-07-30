@@ -1,7 +1,9 @@
 import 'package:animation/horse/horse_bid.dart';
 import 'package:animation/horse/horse_race.dart';
+import 'package:animation/navigate.dart';
 import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:animation/spinn_wheel/wheel_game.dart';
+import 'package:animation/ticket_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dog_race/dog_race_bid.dart';
@@ -33,7 +35,9 @@ class Dahboard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              AppNavigator().push(context, const HorseBid());
+                            },
                             icon: CircleAvatar(
                                 maxRadius: 30,
                                 backgroundColor: Colors.white.withOpacity(0.3),
@@ -51,13 +55,16 @@ class Dahboard extends StatelessWidget {
                                   color: Colors.white, fontFamily: 'BebasNeue'),
                         ),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              AppNavigator()
+                                  .push(context, const MyTicketView());
+                            },
                             icon: CircleAvatar(
                                 maxRadius: 30,
                                 backgroundColor: Colors.white.withOpacity(0.3),
                                 child: const Center(
                                     child: Icon(
-                                  CupertinoIcons.cart_badge_plus,
+                                  CupertinoIcons.tickets,
                                   color: Colors.white,
                                 ))))
                       ],

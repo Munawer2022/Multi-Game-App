@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animation/ticket_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -286,7 +287,18 @@ class _HorseBidState extends State<HorseBid> {
                                   },
                                 ));
                           })),
+                 
+                 
                   SizedBox(height: sized.size.height * 0.04),
+                 TicketWidget(
+                    color: Colors.grey.shade300,
+                    width: 300,
+                    height: 330,
+                    isCornerRounded: true,
+                    padding: const EdgeInsets.all(20),
+                    child: Container(),
+                    // child: const TicketData(),
+                  ),
                   Padding(
                     padding: bidHorsePadding,
                     child: SizedBox(
@@ -327,6 +339,7 @@ class _HorseBidState extends State<HorseBid> {
                       ),
                     ),
                   ),
+                  
                 ]),
               );
             })));

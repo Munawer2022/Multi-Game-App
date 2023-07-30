@@ -37,7 +37,8 @@ dependencies:
   neopop: ^1.0.2
   intl:
   provider:
-  ticket_widget: ^0.0.1
+  
+
 
 
 

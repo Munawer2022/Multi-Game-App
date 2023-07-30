@@ -37,7 +37,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
                   automaticallyImplyLeading: false,
                   flexibleSpace: Image.asset(
-                    'assets/images/horse_bid_back.jpg',
+                    'assets/images/detail_horse.jpg',
                     height: double.infinity,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -59,15 +59,24 @@ class _DetailScreenState extends State<DetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Wednesday Horse'),
-                      CircleAvatar(
-                        radius: 40,
-                        child: Center(
-                            child: Text(
-                          '36',
-                          style: TextStyle(
-                              fontSize: 45, fontWeight: FontWeight.bold),
+                      Container(
+                        width: 90.0,
+                        height: 90.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100.0),
+                          border: Border.all(width: 1.0, color: Colors.blue),
+                        ),
+                        child: const Center(
+                            child: CircleAvatar(
+                          radius: 40,
+                          child: Center(
+                              child: Text(
+                            '36',
+                            style: TextStyle(
+                                fontSize: 45, fontWeight: FontWeight.bold),
+                          )),
                         )),
-                      )
+                      ),
                     ],
                   ),
                 ),
