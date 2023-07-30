@@ -287,10 +287,8 @@ class _HorseBidState extends State<HorseBid> {
                                   },
                                 ));
                           })),
-                 
-                 
                   SizedBox(height: sized.size.height * 0.04),
-                 TicketWidget(
+                  TicketWidget(
                     color: Colors.grey.shade300,
                     width: 300,
                     height: 330,
@@ -339,7 +337,6 @@ class _HorseBidState extends State<HorseBid> {
                       ),
                     ),
                   ),
-                  
                 ]),
               );
             })));
