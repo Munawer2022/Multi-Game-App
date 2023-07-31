@@ -4,13 +4,38 @@ import 'package:animation/navigate.dart';
 import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:animation/spinn_wheel/wheel_game.dart';
 import 'package:animation/ticket_data.dart';
+import 'package:animation/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dog_race/dog_race_bid.dart';
 import 'spinn_wheel/lucky_spinn_wheel.dart';
 
-class Dahboard extends StatelessWidget {
+class Dahboard extends StatefulWidget {
   const Dahboard({super.key});
+
+  @override
+  State<Dahboard> createState() => _DahboardState();
+}
+
+class _DahboardState extends State<Dahboard> {
+  @override
+  initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
+  }
+
+  @override
+  dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +61,7 @@ class Dahboard extends StatelessWidget {
                       children: [
                         IconButton(
                             onPressed: () {
-                              AppNavigator().push(context, const HorseBid());
+                              AppNavigator().push(context, const User());
                             },
                             icon: CircleAvatar(
                                 maxRadius: 30,
@@ -69,28 +94,16 @@ class Dahboard extends StatelessWidget {
                                 ))))
                       ],
                     ),
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            container(context, 'assets/images/horse.jpg',
-                                const HorseRaceScreen()),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            container(context, 'assets/images/cat.jpg',
-                                const DogRaceBid()),
-                          ],
-                        ),
+                        container(context, 'assets/images/horse.jpg',
+                            const HorseRaceScreen()),
                         const SizedBox(
-                          height: 10,
+                          width: 10,
                         ),
                         Center(
-                            child: container(
-                                context,
-                                'assets/images/wheel.jpeg',
+                            child: container(context, 'assets/images/wheel.jpg',
                                 const SpinnWheelBid())),
                       ],
                     ),

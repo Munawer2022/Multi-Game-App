@@ -132,7 +132,7 @@ class _SpinnWheelBidState extends State<SpinnWheelBid> {
                   ),
                   // title: const Text('NestedScrollView'),
                   pinned: false,
-                  expandedHeight: sized.size.height * 0.5,
+                  expandedHeight: sized.size.height * 0.6,
                   //400
                   forceElevated: innerBoxIsScrolled,
                 ),

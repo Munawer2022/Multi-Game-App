@@ -37,6 +37,8 @@ dependencies:
   neopop: ^1.0.2
   intl:
   provider:
+  countup: ^0.1.4
+
   
 
 

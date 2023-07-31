@@ -79,12 +79,6 @@ class _TicketWidgetState extends State<TicketWidget> {
         padding: widget.padding,
         margin: widget.margin,
         decoration: BoxDecoration(
-          // image: DecorationImage(
-          //   image: AssetImage(
-          //     'assets/images/horse_bid_back.jpg',
-          //   ),
-          //   fit: BoxFit.cover,
-          // ),
           boxShadow: widget.shadow,
           color: widget.color,
           borderRadius: widget.isCornerRounded

@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:animation/dashboard.dart';
 import 'package:animation/ticket_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:neopop/utils/color_utils.dart';
 import 'package:provider/provider.dart';
+
+import '../navigate.dart';
 
 class HorseBid extends StatefulWidget {
   const HorseBid({super.key});
@@ -99,7 +102,7 @@ class _HorseBidState extends State<HorseBid> {
                 SliverAppBar(
                   leading: IconButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        AppNavigator().push(context, const Dahboard());
                       },
                       icon: const Icon(
                         CupertinoIcons.back,
@@ -134,7 +137,7 @@ class _HorseBidState extends State<HorseBid> {
                   ),
                   // title: const Text('NestedScrollView'),
                   pinned: false,
-                  expandedHeight: sized.size.height * 0.5,
+                  expandedHeight: sized.size.height * 0.6,
                   //400
                   forceElevated: innerBoxIsScrolled,
                 ),
@@ -288,15 +291,31 @@ class _HorseBidState extends State<HorseBid> {
                                 ));
                           })),
                   SizedBox(height: sized.size.height * 0.04),
-                  TicketWidget(
-                    color: Colors.grey.shade300,
-                    width: 300,
-                    height: 330,
-                    isCornerRounded: true,
-                    padding: const EdgeInsets.all(20),
-                    child: Container(),
-                    // child: const TicketData(),
+                  Padding(
+                    padding: bidHorsePadding,
+                    child: TicketWidget(
+                      color: Colors.grey.shade300.withOpacity(.7),
+                      width: double.infinity,
+                      height: sized.size.height * 0.2,
+                      isCornerRounded: true,
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Text('Ticket',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              softWrap: false,
+                              style: theme.textTheme.headline4?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.primaryColor.withOpacity(0.7))
+                              // ?.copyWith(color: Colors.black87),
+                              ),
+                        ],
+                      ),
+                      // child: const TicketData(),
+                    ),
                   ),
+                  SizedBox(height: sized.size.height * 0.04),
                   Padding(
                     padding: bidHorsePadding,
                     child: SizedBox(
