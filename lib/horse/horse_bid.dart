@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:animation/dashboard.dart';
-import 'package:animation/ticket_data.dart';
+import 'package:animation/ticket_button/ticket_ui_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -291,30 +291,30 @@ class _HorseBidState extends State<HorseBid> {
                                 ));
                           })),
                   SizedBox(height: sized.size.height * 0.04),
-                  Padding(
-                    padding: bidHorsePadding,
-                    child: TicketWidget(
-                      color: Colors.grey.shade300.withOpacity(.7),
-                      width: double.infinity,
-                      height: sized.size.height * 0.2,
-                      isCornerRounded: true,
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          Text('Ticket',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              softWrap: false,
-                              style: theme.textTheme.headline4?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: theme.primaryColor.withOpacity(0.7))
-                              // ?.copyWith(color: Colors.black87),
-                              ),
-                        ],
-                      ),
-                      // child: const TicketData(),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: bidHorsePadding,
+                  //   child: TicketWidget(
+                  //     color: Colors.grey.shade300.withOpacity(.7),
+                  //     width: double.infinity,
+                  //     height: sized.size.height * 0.2,
+                  //     isCornerRounded: true,
+                  //     padding: const EdgeInsets.all(20),
+                  //     child: Column(
+                  //       children: [
+                  //         Text('Ticket',
+                  //             overflow: TextOverflow.ellipsis,
+                  //             maxLines: 2,
+                  //             softWrap: false,
+                  //             style: theme.textTheme.headline4?.copyWith(
+                  //                 fontWeight: FontWeight.bold,
+                  //                 color: theme.primaryColor.withOpacity(0.7))
+                  //             // ?.copyWith(color: Colors.black87),
+                  //             ),
+                  //       ],
+                  //     ),
+                  //     // child: const TicketData(),
+                  //   ),
+                  // ),
                   SizedBox(height: sized.size.height * 0.04),
                   Padding(
                     padding: bidHorsePadding,

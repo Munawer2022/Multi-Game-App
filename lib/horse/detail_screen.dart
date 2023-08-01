@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animation/dashboard.dart';
+import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -164,17 +165,26 @@ class _DetailScreenState extends State<DetailScreen> {
                     scale: 22,
                   ),
                   SizedBox(width: sized.size.width * 0.01),
-                  Text('500',
+                  Countup(
+                      begin: 0,
+                      end: 500,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      duration: const Duration(milliseconds: 500),
+                      separator: ',',
                       style: theme.textTheme.headline4?.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
+                  // Text('500',
+                  //     style: theme.textTheme.headline4?.copyWith(
+                  //         fontWeight: FontWeight.bold, color: Colors.white)),
                 ],
               ),
               SizedBox(
                 height: sized.size.height * 0.01,
               ),
-              Container(
+              SizedBox(
                   height: sized.size.height * 0.07,
-                  child: VerticalDivider(
+                  child: const VerticalDivider(
                     color: Colors.white,
                     thickness: 2,
                   )),
@@ -190,9 +200,22 @@ class _DetailScreenState extends State<DetailScreen> {
                     scale: 22,
                   ),
                   SizedBox(width: sized.size.width * 0.01),
-                  Text('+ 1000',
+                  Text('+',
                       style: theme.textTheme.headline4?.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
+                  SizedBox(width: sized.size.width * 0.01),
+                  Countup(
+                      begin: 0,
+                      end: 1000,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      duration: const Duration(milliseconds: 500),
+                      separator: ',',
+                      style: theme.textTheme.headline4?.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white)),
+                  // Text('+ 1000',
+                  //     style: theme.textTheme.headline4?.copyWith(
+                  //         fontWeight: FontWeight.bold, color: Colors.white)),
                 ],
               ),
               SizedBox(
