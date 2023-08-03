@@ -3,9 +3,11 @@ import 'package:animation/spinn_wheel/lucky_spinn_wheel.dart';
 import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:animation/spinn_wheel/wheel_game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
+
 import 'package:provider/provider.dart';
 
+import 'auth/login.dart';
+import 'auth/register.dart';
 import 'dashboard.dart';
 import 'dog_race/dog_race_bid.dart';
 
@@ -34,6 +36,6 @@ class MyApp extends StatelessWidget {
           //   Theme.of(context).textTheme,
           // ),
         ),
-        home: Dahboard());
+        home: RegisterScreen());
   }
 }

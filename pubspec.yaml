@@ -32,13 +32,15 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_fortune_wheel:
-  flutter_spinning_wheel:
+  # flutter_spinning_wheel:
   rxdart:
   neopop: ^1.0.2
   intl:
   provider:
   countup: ^0.1.4
   carousel_slider: ^4.2.1
+  http: 
+
 
 
   # The following adds the Cupertino Icons font to your application.
