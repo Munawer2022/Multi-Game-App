@@ -1,103 +1,94 @@
 import 'dart:convert';
-import 'package:animation/auth/register.dart';
-import 'package:animation/navigate.dart';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
-class LoginScreen extends StatefulWidget {
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
+class LoginScreen extends StatelessWidget {
+  LoginScreen({Key? key}) : super(key: key);
 
-class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _numberController = TextEditingController();
-  bool _isLoading = false;
+  final TextEditingController _usernameController = TextEditingController();
 
-  Future<void> _login() async {
-    setState(() {
-      _isLoading = true;
-    });
+  final TextEditingController _passwordController = TextEditingController();
 
-    String username = _usernameController.text;
-    String password = _passwordController.text;
-    String number = _numberController.text;
+  final TextEditingController _numberController = TextEditingController();
 
-    // Replace 'YOUR_LOGIN_API_URL' with your actual login API URL.
-    var apiUrl = 'http://127.0.0.1:8000/api/login';
-    var requestBody = {
-      'name': username,
-      'password': password,
-      'mobile_no': number
-    };
-
+  void login() async {
     try {
-      Response response = await http.post(Uri.parse(apiUrl),
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode(requestBody));
+      Response response = await post(
+        Uri.parse('http://10.0.2.2:8000/api/login'),
+        body: {
+          'name': _usernameController.text.toString(),
+          'password': _passwordController.text.toString(),
+          'mobile_no': _numberController.text.toString(),
+        },
+        headers: {'Accept': 'application/json'},
+      );
 
       if (response.statusCode == 200) {
-        var responseData = json.decode(response.body);
-        print('Login Successful: $responseData');
-        // Redirect to the next screen or do whatever you want here.
+        var data = jsonDecode(response.body.toString());
+        if (kDebugMode) {
+          print(data['token']);
+        }
+        if (kDebugMode) {
+          print('login successfully');
+        }
       } else {
-        var errorData = json.decode(response.body);
-        print('Login Failed: $errorData');
-        // Show an error message to the user or handle the error accordingly.
+        if (kDebugMode) {
+          print('failed');
+        }
       }
     } catch (e) {
-      print('Error: $e');
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Screen'),
+        title: const Text('login'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextFormField(
-              controller: _usernameController,
-              decoration: InputDecoration(labelText: 'name'),
+            textfield(_usernameController, 'name'),
+            const SizedBox(
+              height: 20,
             ),
-            TextFormField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              // obscureText: true,
+            textfield(_numberController, 'number'),
+            const SizedBox(
+              height: 20,
             ),
-            TextFormField(
-              controller: _numberController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'number'),
+            textfield(_passwordController, 'password'),
+            const SizedBox(
+              height: 20,
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                AppNavigator().push(context, RegisterScreen());
-              },
-              child: Text('register'),
+            SizedBox(
+              height: 50,
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: () {
+                    login();
+                  },
+                  child: Text('login')),
             ),
-            SizedBox(height: 20),
-            _isLoading
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: _login,
-                    child: Text('Login'),
-                  ),
           ],
         ),
       ),
     );
   }
+}
+
+Widget textfield(controller, name) {
+  return CupertinoTextField(
+      padding: const EdgeInsets.all(15),
+      controller: controller,
+      placeholder: name);
 }
