@@ -38,7 +38,7 @@ dependencies:
   intl:
   provider:
   countup: ^0.1.4
-  carousel_slider: ^4.2.1
+  # carousel_slider: ^4.2.1
   http:
   get_storage: ^2.1.1
 

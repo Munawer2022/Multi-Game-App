@@ -1,12 +1,66 @@
+import 'dart:convert';
+
+import 'package:animation/auth/login/login.dart';
 import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart';
 
 import 'dashboard.dart';
 import 'navigate.dart';
 
 class User extends StatelessWidget {
-  const User({super.key});
+  User({super.key});
+  final box = GetStorage();
+  void logout(BuildContext context) async {
+    try {
+      Response response = await post(
+        Uri.parse('http://10.0.2.2:8000/api/logout'),
+        headers: {
+          'Accept': 'application/json',
+          'authorization': 'Bearer ' + box.read('token'),
+        },
+      );
+
+      if (response.statusCode == 200) {
+        box.remove('token').then((value) {
+          AppNavigator().push(context, LoginScreen());
+        });
+        // AppNavigator().push(context, const Dahboard());
+        var data = jsonDecode(response.body.toString());
+
+        // AppNavigator().push(context, LoginScreen());
+        var snackBar = SnackBar(
+          content: Text(data['message']),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        if (kDebugMode) {
+          print(data);
+        }
+      }
+//     else if (response.statusCode == 401) {
+//       var data = jsonDecode(response.body.toString());
+//       var snackBar = SnackBar(
+//         content: Text(data['message']),
+//       );
+
+// // Find the ScaffoldMessenger in the widget tree
+// // and use it to show a SnackBar.
+//       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+//       if (kDebugMode) {
+//         print(data['message']);
+//       }
+//     }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -259,7 +313,9 @@ class User extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
                                 Colors.red.withOpacity(.7))),
-                        onPressed: () {},
+                        onPressed: () {
+                          logout(context);
+                        },
                         child: Text(
                           'Log out',
                           style: theme.textTheme.titleLarge?.copyWith(

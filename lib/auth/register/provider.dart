@@ -1,11 +1,12 @@
 import 'package:animation/auth/login/repository.dart';
+import 'package:animation/auth/register/repository.dart';
+import 'package:animation/navigate.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../dashboard.dart';
-import '../../navigate.dart';
 
-class LoginProvider extends ChangeNotifier {
+class RegisterProvider extends ChangeNotifier {
   final box = GetStorage();
 
   bool _loading = false;
@@ -18,12 +19,12 @@ class LoginProvider extends ChangeNotifier {
 
   dynamic errorShow;
 
-  final LoginRepository loginRepository = LoginRepository();
-  Future<dynamic> loginPostApiResponse(
+  final RegisterRepository registerRepository = RegisterRepository();
+  Future<dynamic> registerPostApiResponse(
       BuildContext context, dynamic data) async {
     loadingBotton(true);
 
-    return await loginRepository.loginPostApiResponse(data).then((value) {
+    return await registerRepository.registerPostApiResponse(data).then((value) {
       var snackBar = SnackBar(
         content: Text(value['user']),
       );

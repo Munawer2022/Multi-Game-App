@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animation/horse/horse_bid.dart';
 import 'package:animation/horse/horse_race.dart';
 import 'package:animation/navigate.dart';
@@ -5,10 +7,12 @@ import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:animation/spinn_wheel/wheel_game.dart';
 import 'package:animation/ticket_button/ticket_ui_screen.dart';
 import 'package:animation/user.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 
 class Dahboard extends StatefulWidget {
   const Dahboard({super.key});
@@ -16,6 +20,7 @@ class Dahboard extends StatefulWidget {
   @override
   State<Dahboard> createState() => _DahboardState();
 }
+
 
 class _DahboardState extends State<Dahboard> {
   @override
@@ -81,7 +86,7 @@ class _DahboardState extends State<Dahboard> {
                       children: [
                         IconButton(
                             onPressed: () {
-                              AppNavigator().push(context, const User());
+                              AppNavigator().push(context, User());
                             },
                             icon: CircleAvatar(
                                 maxRadius: 30,

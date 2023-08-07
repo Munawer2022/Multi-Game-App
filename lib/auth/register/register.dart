@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:animation/auth/login/login.dart';
 import 'package:animation/auth/login/provider.dart';
+import 'package:animation/auth/register/provider.dart';
 
 import 'package:animation/dashboard.dart';
 import 'package:animation/utils.dart';
@@ -13,10 +14,9 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 import '../../navigate.dart';
-import '../register/register.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({Key? key}) : super(key: key);
 
   final TextEditingController _usernameController = TextEditingController();
 
@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final loginController = Provider.of<LoginProvider>(context);
+    final registerController = Provider.of<RegisterProvider>(context);
 
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
@@ -108,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Login',
+                            'Register',
                             style: theme.textTheme.displayLarge?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -186,11 +186,12 @@ class LoginScreen extends StatelessWidget {
                         height: 50,
                       ),
                       Button(
-                          loading: loginController.loading,
-                          title: 'Login',
+                          loading: registerController.loading,
+                          title: 'Register',
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
-                              loginController.loginPostApiResponse(context, {
+                              registerController
+                                  .registerPostApiResponse(context, {
                                 'name': _usernameController.text.toString(),
                                 'password': _passwordController.text.toString(),
                                 'mobile_no': _numberController.text.toString(),
@@ -230,19 +231,19 @@ class LoginScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Don't have an account ?",
+                          Text("Already have an account ?",
                               style: theme.textTheme.titleMedium),
                           TextButton(
                               // style: ButtonStyle(
                               //     backgroundColor: MaterialStateProperty.all(
                               //         Colors.blue.shade300)),
                               onPressed: () {
-                                AppNavigator().push(context, RegisterScreen());
+                                AppNavigator().push(context, LoginScreen());
                               },
                               child:
                                   //  const CircularProgressIndicator()
                                   Text(
-                                'Register',
+                                'Login',
                                 style: theme.textTheme.titleMedium?.copyWith(
                                     color: Colors.blue.shade300,
                                     fontWeight: FontWeight.bold),
