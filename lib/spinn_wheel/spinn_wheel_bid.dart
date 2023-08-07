@@ -25,7 +25,6 @@ class _SpinnWheelBidState extends State<SpinnWheelBid> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     startTimer();
   }

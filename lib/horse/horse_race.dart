@@ -7,6 +7,7 @@ import '../navigate.dart';
 import 'detail_screen.dart';
 
 class HorseRaceScreen extends StatefulWidget {
+  
   const HorseRaceScreen({super.key});
 
   @override
@@ -44,6 +45,8 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
+    
+
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 7));
 
@@ -111,7 +114,6 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
 
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: Scaffold(
         body: Stack(

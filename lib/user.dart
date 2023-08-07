@@ -15,6 +15,7 @@ class User extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.blueAccent.shade100.withOpacity(.3),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           actions: [
             IconButton(
                 onPressed: () {

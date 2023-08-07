@@ -9,6 +9,7 @@ class TicketUiScreen extends StatelessWidget {
     var theme = Theme.of(context);
     var sized = MediaQuery.of(context);
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: Colors.blueAccent.shade100.withOpacity(.3),
       body: SafeArea(
           child: Container(

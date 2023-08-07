@@ -28,12 +28,12 @@ class _HorseBidState extends State<HorseBid> {
     startTimer();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    startTimer();
-  }
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   startTimer();
+  // }
 
   void startTimer() {
     // Run the timer every second
