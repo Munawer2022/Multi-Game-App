@@ -146,7 +146,7 @@ class _DahboardState extends State<Dahboard> {
                         ),
                         Center(
                             child: container(context, 'assets/images/wheel.jpg',
-                                const SpinnWheelBid())),
+                                const WheelGame())),
                       ],
                     ),
                     Center(
