@@ -32,8 +32,10 @@ class LoginProvider extends ChangeNotifier {
       loadingBotton(false);
       AppNavigator().push(context, const Dahboard());
       debugPrint('\x1B[33m${value['token']}\x1B[0m');
-      debugPrint(value['token']);
+
       box.write('token', value['token']);
+      box.write('name', value['name']);
+      box.write('mobile_no', value['mobile_no']);
       // box.write('id', value['user']['id']);
 
       // box.write('first_name', value['user']['first_name']);
@@ -44,7 +46,16 @@ class LoginProvider extends ChangeNotifier {
       // _response = value;
     }).onError((error, stackTrace) {
       loadingBotton(false);
-      errorShow = error;
+      // errorShow = error.val('message');
+      print(error);
+      var snackBar = SnackBar(
+        content: Text(error.toString()),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // if (kDebugMode) {
+      //   print(error);
+      // }
       // Utils().errorSnackBarMessage(error.toString(), context);
       notifyListeners();
     });

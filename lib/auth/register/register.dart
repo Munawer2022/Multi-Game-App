@@ -155,7 +155,7 @@ class RegisterScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       textfield(
                         _passwordController,
@@ -169,7 +169,7 @@ class RegisterScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       textfield(
                         _numberController,
@@ -183,7 +183,7 @@ class RegisterScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 40,
                       ),
                       Button(
                           loading: registerController.loading,

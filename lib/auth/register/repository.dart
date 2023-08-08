@@ -33,7 +33,7 @@ dynamic returnResponse(http.Response response) {
       dynamic responseJson = jsonDecode(response.body);
 
       return responseJson;
-    case 401:
+    case 200:
       throw BadRequestException(response.body);
     case 500:
     case 404:

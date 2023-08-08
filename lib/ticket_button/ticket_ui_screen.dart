@@ -1,5 +1,9 @@
 import 'package:animation/ticket_button/ticket_painter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../dashboard.dart';
+import '../navigate.dart';
 
 class TicketUiScreen extends StatelessWidget {
   TicketUiScreen({Key? key}) : super(key: key);
@@ -9,7 +13,19 @@ class TicketUiScreen extends StatelessWidget {
     var theme = Theme.of(context);
     var sized = MediaQuery.of(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            onPressed: () {
+              AppNavigator().push(context, const Dahboard());
+            },
+            icon: const Icon(
+              CupertinoIcons.left_chevron,
+              color: Colors.white,
+            )),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       backgroundColor: Colors.blueAccent.shade100.withOpacity(.3),
       body: SafeArea(
           child: Container(
@@ -34,21 +50,30 @@ class TicketUiScreen extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    Text(
-                      'BH07',
-                      style: TextStyle(
-                        color: color,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Text(
-                      '\$140',
-                      style: TextStyle(
-                        color: color,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                      ),
+                    // Text(
+                    //   'BH07',
+                    //   style: TextStyle(
+                    //     color: color,
+                    //     fontSize: 14,
+                    //     fontWeight: FontWeight.w400,
+                    //   ),
+                    // ),
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/coin.png',
+                          scale: 22,
+                        ),
+                        SizedBox(width: sized.size.width * 0.01),
+                        Text(
+                          '140',
+                          style: TextStyle(
+                            color: color,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -88,8 +113,8 @@ class TicketUiScreen extends StatelessWidget {
                           Center(
                             child: Image.asset(
                               'assets/images/horse_num.png',
-                              color: Colors.white,
-                              scale: 25,
+                              color: Colors.brown,
+                              scale: 16,
                             ),
                           ),
                         ],
@@ -128,7 +153,7 @@ class TicketUiScreen extends StatelessWidget {
                       '1h 30m',
                       style: TextStyle(
                         color: color,
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -147,7 +172,7 @@ class TicketUiScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Indigo',
+                      'munawer',
                       style: TextStyle(
                         color: color,
                         fontSize: 16,
@@ -168,7 +193,7 @@ class TicketUiScreen extends StatelessWidget {
                           vertical: 2,
                         ),
                         child: Text(
-                          'Cheapest',
+                          'Waiting',
                           style: TextStyle(
                             color: color,
                             fontSize: 14,

@@ -26,6 +26,8 @@ class User extends StatelessWidget {
 
       if (response.statusCode == 200) {
         box.remove('token').then((value) {
+          box.remove('name');
+          box.remove('mobile_no');
           AppNavigator().push(context, LoginScreen());
         });
         // AppNavigator().push(context, const Dahboard());
@@ -41,20 +43,6 @@ class User extends StatelessWidget {
           print(data);
         }
       }
-//     else if (response.statusCode == 401) {
-//       var data = jsonDecode(response.body.toString());
-//       var snackBar = SnackBar(
-//         content: Text(data['message']),
-//       );
-
-// // Find the ScaffoldMessenger in the widget tree
-// // and use it to show a SnackBar.
-//       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-//       if (kDebugMode) {
-//         print(data['message']);
-//       }
-//     }
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -89,30 +77,32 @@ class User extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const CircleAvatar(
-                  radius: 43,
-                  backgroundColor: Colors.white,
-                  child: CircleAvatar(
-                      backgroundColor: Colors.black87,
-                      maxRadius: 40,
-                      child: Icon(
-                        CupertinoIcons.person_solid,
-                        color: Colors.white,
-                        size: 60,
-                      )),
-                ),
+                // const CircleAvatar(
+                //   radius: 43,
+                //   backgroundColor: Colors.white,
+                //   child: CircleAvatar(
+                //       backgroundColor: Colors.black87,
+                //       maxRadius: 40,
+                //       child: Icon(
+                //         CupertinoIcons.person_solid,
+                //         color: Colors.white,
+                //         size: 60,
+                //       )),
+                // ),
                 SizedBox(height: sized.size.height * 0.02),
-                Text('Riko Sipto Dimo',
+                Text(box.read('name').toString(),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: false,
                     style: theme.textTheme.headline3?.copyWith(
-                        fontWeight: FontWeight.bold, color: Colors.white)
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)
                     // ?.copyWith(color: Colors.black87),
                     ),
                 SizedBox(height: sized.size.height * 0.03),
-                const Text(
-                  '+92 10237 1798217',
+                Text(
+                  box.read('mobile_no').toString(),
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -156,7 +146,7 @@ class User extends StatelessWidget {
                           const Text(
                             '/Available coin',
                             style: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.white60,
                                 fontSize: 16,
                                 fontStyle: FontStyle.italic),
                           ),

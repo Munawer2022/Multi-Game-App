@@ -21,7 +21,6 @@ class Dahboard extends StatefulWidget {
   State<Dahboard> createState() => _DahboardState();
 }
 
-
 class _DahboardState extends State<Dahboard> {
   @override
   initState() {
@@ -47,130 +46,141 @@ class _DahboardState extends State<Dahboard> {
       newContainer(context, 'assets/images/horse.jpg', const HorseRaceScreen()),
       newContainer(context, 'assets/images/wheel.jpg', const SpinnWheelBid()),
     ];
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Stack(
-            children: [
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                foregroundDecoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black,
-                      Colors.transparent,
-                      Colors.transparent,
-                      Colors.black
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0, 0.3, 0.011, 1],
+    return WillPopScope(
+      onWillPop: () async {
+        await SystemNavigator.pop();
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Center(
+            child: Stack(
+              children: [
+                Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  foregroundDecoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.black,
+                        Colors.transparent,
+                        Colors.transparent,
+                        Colors.black
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: [0, 0.3, 0.011, 1],
+                    ),
+                  ),
+                  child: Image.asset(
+                    'assets/images/game.png',
+                    height: 1200,
+                    width: 1200,
+                    fit: BoxFit.cover,
                   ),
                 ),
-                child: Image.asset(
-                  'assets/images/game.png',
-                  height: 1200,
-                  width: 1200,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              AppNavigator().push(context, User());
-                            },
-                            icon: CircleAvatar(
-                                maxRadius: 30,
-                                backgroundColor: Colors.white.withOpacity(0.3),
-                                child: const Center(
-                                    child: Icon(
-                                  CupertinoIcons.person_alt,
-                                  color: Colors.white,
-                                )))),
-                        Text(
-                          'Dashboard',
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                AppNavigator().push(context, User());
+                              },
+                              icon: CircleAvatar(
+                                  maxRadius: 30,
+                                  backgroundColor:
+                                      Colors.white.withOpacity(0.3),
+                                  child: const Center(
+                                      child: Icon(
+                                    CupertinoIcons.person_alt,
+                                    color: Colors.white,
+                                  )))),
+                          Text(
+                            'Dashboard',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(
+                                    color: Colors.white,
+                                    fontFamily: 'BebasNeue'),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                AppNavigator().push(context, TicketUiScreen());
+                              },
+                              icon: CircleAvatar(
+                                  maxRadius: 30,
+                                  backgroundColor:
+                                      Colors.white.withOpacity(0.3),
+                                  child: const Center(
+                                      child: Icon(
+                                    CupertinoIcons.tickets_fill,
+                                    color: Colors.white,
+                                  ))))
+                        ],
+                      ),
+                      // CarouselSlider(
+                      //     options: CarouselOptions(
+                      //       height: 200.0,
+                      //       aspectRatio: 16 / 9,
+                      //       viewportFraction: 0.8,
+                      //       initialPage: 0,
+                      //       enableInfiniteScroll: true,
+                      //       reverse: false,
+                      //       autoPlay: true,
+                      //       autoPlayInterval: const Duration(seconds: 3),
+                      //       autoPlayAnimationDuration:
+                      //           const Duration(milliseconds: 800),
+                      //       autoPlayCurve: Curves.fastOutSlowIn,
+                      //       enlargeCenterPage: true,
+                      //       enlargeFactor: 0.3,
+                      //       scrollDirection: Axis.horizontal,
+                      //     ),
+                      //     items: [
+                      //       newContainer(context, 'assets/images/horse.jpg',
+                      //           const HorseRaceScreen()),
+                      //       newContainer(context, 'assets/images/wheel.jpg',
+                      //           const SpinnWheelBid()),
+                      //     ]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          container(context, 'assets/images/horse.jpg',
+                              const HorseRaceScreen()),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Center(
+                              child: container(
+                                  context,
+                                  'assets/images/wheel.jpg',
+                                  const WheelGame())),
+                        ],
+                      ),
+                      Center(
+                        child: Text(
+                          'Game Zone\n          -',
                           style: Theme.of(context)
                               .textTheme
-                              .displaySmall
+                              .displayLarge
                               ?.copyWith(
                                   color: Colors.white, fontFamily: 'BebasNeue'),
                         ),
-                        IconButton(
-                            onPressed: () {
-                              AppNavigator().push(context, TicketUiScreen());
-                            },
-                            icon: CircleAvatar(
-                                maxRadius: 30,
-                                backgroundColor: Colors.white.withOpacity(0.3),
-                                child: const Center(
-                                    child: Icon(
-                                  CupertinoIcons.tickets_fill,
-                                  color: Colors.white,
-                                ))))
-                      ],
-                    ),
-                    // CarouselSlider(
-                    //     options: CarouselOptions(
-                    //       height: 200.0,
-                    //       aspectRatio: 16 / 9,
-                    //       viewportFraction: 0.8,
-                    //       initialPage: 0,
-                    //       enableInfiniteScroll: true,
-                    //       reverse: false,
-                    //       autoPlay: true,
-                    //       autoPlayInterval: const Duration(seconds: 3),
-                    //       autoPlayAnimationDuration:
-                    //           const Duration(milliseconds: 800),
-                    //       autoPlayCurve: Curves.fastOutSlowIn,
-                    //       enlargeCenterPage: true,
-                    //       enlargeFactor: 0.3,
-                    //       scrollDirection: Axis.horizontal,
-                    //     ),
-                    //     items: [
-                    //       newContainer(context, 'assets/images/horse.jpg',
-                    //           const HorseRaceScreen()),
-                    //       newContainer(context, 'assets/images/wheel.jpg',
-                    //           const SpinnWheelBid()),
-                    //     ]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        container(context, 'assets/images/horse.jpg',
-                            const HorseRaceScreen()),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Center(
-                            child: container(context, 'assets/images/wheel.jpg',
-                                const WheelGame())),
-                      ],
-                    ),
-                    Center(
-                      child: Text(
-                        'Game Zone\n          -',
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge
-                            ?.copyWith(
-                                color: Colors.white, fontFamily: 'BebasNeue'),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 0,
-                    )
-                  ],
+                      const SizedBox(
+                        height: 0,
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

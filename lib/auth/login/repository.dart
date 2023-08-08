@@ -34,6 +34,7 @@ dynamic returnResponse(http.Response response) {
       return responseJson;
     case 401:
       throw BadRequestException(response.body);
+
     case 500:
     case 404:
       throw UnauthorisedException(response.body);

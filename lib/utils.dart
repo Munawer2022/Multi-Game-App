@@ -17,12 +17,6 @@ class Button extends StatefulWidget {
 
 class _ButtonState extends State<Button> with TickerProviderStateMixin {
   late AnimationController animationController;
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    animationController.dispose();
-  }
 
   @override
   void initState() {
@@ -30,6 +24,12 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
     animationController =
         AnimationController(duration: new Duration(seconds: 2), vsync: this);
     animationController.repeat();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   @override

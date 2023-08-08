@@ -77,6 +77,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginController = Provider.of<LoginProvider>(context);
+    // print(loginController.errorShow['message'].toString());
 
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
@@ -155,7 +156,7 @@ class LoginScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       textfield(
                         _passwordController,
@@ -169,7 +170,7 @@ class LoginScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       textfield(
                         _numberController,
@@ -183,7 +184,7 @@ class LoginScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 40,
                       ),
                       Button(
                           loading: loginController.loading,

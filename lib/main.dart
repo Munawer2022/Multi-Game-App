@@ -4,6 +4,7 @@ import 'package:animation/horse/horse_bid.dart';
 import 'package:animation/spinn_wheel/lucky_spinn_wheel.dart';
 import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:animation/spinn_wheel/wheel_game.dart';
+import 'package:animation/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -40,6 +41,6 @@ class MyApp extends StatelessWidget {
           //   Theme.of(context).textTheme,
           // ),
         ),
-        home: LoginScreen());
+        home: const SplashScreen());
   }
 }
