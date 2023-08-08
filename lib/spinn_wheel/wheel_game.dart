@@ -18,14 +18,70 @@ class _WheelGameState extends State<WheelGame> {
   final selected = BehaviorSubject<int>();
   int rewards = 0;
 
-  List<int> items = [100, 200, 500, 1000, 2000, 40];
+  List<int> items = [
+    100,
+    200,
+    500,
+    1000,
+    2000,
+    40,
+    0,
+    3,
+    12,
+    0,
+    5,
+    7,
+    12,
+    0,
+    5,
+    7,
+    12,
+    0,
+    5,
+    7,
+    // 5,
+    7,
+    12,
+    0,
+    5,
+    7,
+    12,
+    0,
+    5,
+    7,
+  ];
   List<Color> color = [
     Colors.red,
-    Colors.orange,
+    Colors.black,
     Colors.red,
-    Colors.orange,
+    Colors.green,
     Colors.red,
-    Colors.orange,
+    Colors.black,
+    Colors.red,
+    Colors.green,
+    Colors.red,
+    Colors.black,
+    Colors.red,
+    Colors.green,
+    Colors.red,
+    Colors.black,
+    Colors.red,
+    Colors.green,
+    Colors.red,
+    Colors.black,
+    Colors.red,
+    Colors.green,
+    //
+    Colors.red,
+    Colors.green,
+    Colors.red,
+    Colors.black,
+    Colors.red,
+    Colors.green,
+    Colors.red,
+    Colors.black,
+    Colors.red,
+    Colors.green,
   ];
 
   @override
@@ -71,7 +127,7 @@ class _WheelGameState extends State<WheelGame> {
                       alignment: AlignmentDirectional.center,
                       children: [
                         SizedBox(
-                          height: 300,
+                          height: 350,
                           child: FortuneWheel(
                             physics: CircularPanPhysics(
                               duration: const Duration(seconds: 1),
@@ -95,12 +151,20 @@ class _WheelGameState extends State<WheelGame> {
                                   i < items.length;
                                   i++) ...<FortuneItem>{
                                 FortuneItem(
-                                  child: Text(items[i].toString()),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 110),
+                                    child: Text(
+                                      items[i].toString(),
+                                    ),
+                                  ),
                                   style: FortuneItemStyle(
-                                    textStyle: TextStyle(fontSize: 24),
+                                    textAlign: TextAlign.end,
+                                    textStyle: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
                                     color: color[i],
                                     borderColor: Colors.yellow.shade700,
-                                    borderWidth: 11,
+                                    borderWidth: 5,
                                   ),
                                 ),
                               },
