@@ -1,4 +1,5 @@
 import 'package:animation/auth/login/repository.dart';
+import 'package:animation/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -24,11 +25,12 @@ class LoginProvider extends ChangeNotifier {
     loadingBotton(true);
 
     return await loginRepository.loginPostApiResponse(data).then((value) {
-      var snackBar = SnackBar(
-        content: Text(value['user']),
-      );
+      snackbar(value['user'], context);
+      // var snackBar = SnackBar(
+      //   content: Text(value['user']),
+      // );
 
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
       loadingBotton(false);
       AppNavigator().push(context, const Dahboard());
       debugPrint('\x1B[33m${value['token']}\x1B[0m');
@@ -48,11 +50,7 @@ class LoginProvider extends ChangeNotifier {
       loadingBotton(false);
       // errorShow = error.val('message');
       print(error);
-      var snackBar = SnackBar(
-        content: Text(error.toString()),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      errorsnackBar(error.toString(), context);
       // if (kDebugMode) {
       //   print(error);
       // }

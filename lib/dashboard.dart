@@ -7,6 +7,8 @@ import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:animation/spinn_wheel/wheel_game.dart';
 import 'package:animation/ticket_button/ticket_ui_screen.dart';
 import 'package:animation/user.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:countup/countup.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -42,9 +44,11 @@ class _DahboardState extends State<Dahboard> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var sized = MediaQuery.of(context);
     List items = [
       newContainer(context, 'assets/images/horse.jpg', const HorseRaceScreen()),
-      newContainer(context, 'assets/images/wheel.jpg', const SpinnWheelBid()),
+      // newContainer(context, 'assets/images/wheel.jpg', const SpinnWheelBid()),
     ];
     return WillPopScope(
       onWillPop: () async {
@@ -69,7 +73,7 @@ class _DahboardState extends State<Dahboard> {
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      stops: [0, 0.3, 0.011, 1],
+                      stops: [0, 0.5, 0.11, 1],
                     ),
                   ),
                   child: Image.asset(
@@ -84,7 +88,7 @@ class _DahboardState extends State<Dahboard> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -93,76 +97,65 @@ class _DahboardState extends State<Dahboard> {
                                 AppNavigator().push(context, User());
                               },
                               icon: CircleAvatar(
-                                  maxRadius: 30,
+                                  maxRadius: 40,
                                   backgroundColor:
                                       Colors.white.withOpacity(0.3),
                                   child: const Center(
                                       child: Icon(
                                     CupertinoIcons.person_alt,
+                                    size: 40,
                                     color: Colors.white,
                                   )))),
                           Text(
                             'Dashboard',
                             style: Theme.of(context)
                                 .textTheme
-                                .displaySmall
+                                .displayMedium
                                 ?.copyWith(
                                     color: Colors.white,
                                     fontFamily: 'BebasNeue'),
                           ),
-                          IconButton(
-                              onPressed: () {
-                                AppNavigator().push(context, TicketUiScreen());
-                              },
-                              icon: CircleAvatar(
-                                  maxRadius: 30,
-                                  backgroundColor:
-                                      Colors.white.withOpacity(0.3),
-                                  child: const Center(
-                                      child: Icon(
-                                    CupertinoIcons.tickets_fill,
-                                    color: Colors.white,
-                                  ))))
                         ],
                       ),
-                      // CarouselSlider(
-                      //     options: CarouselOptions(
-                      //       height: 200.0,
-                      //       aspectRatio: 16 / 9,
-                      //       viewportFraction: 0.8,
-                      //       initialPage: 0,
-                      //       enableInfiniteScroll: true,
-                      //       reverse: false,
-                      //       autoPlay: true,
-                      //       autoPlayInterval: const Duration(seconds: 3),
-                      //       autoPlayAnimationDuration:
-                      //           const Duration(milliseconds: 800),
-                      //       autoPlayCurve: Curves.fastOutSlowIn,
-                      //       enlargeCenterPage: true,
-                      //       enlargeFactor: 0.3,
-                      //       scrollDirection: Axis.horizontal,
-                      //     ),
-                      //     items: [
-                      //       newContainer(context, 'assets/images/horse.jpg',
-                      //           const HorseRaceScreen()),
-                      //       newContainer(context, 'assets/images/wheel.jpg',
-                      //           const SpinnWheelBid()),
-                      //     ]),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          container(context, 'assets/images/horse.jpg',
-                              const HorseRaceScreen()),
-                          const SizedBox(
-                            width: 10,
+
+                      CarouselSlider(
+                          options: CarouselOptions(
+                            height: 200.0,
+                            aspectRatio: 16 / 9,
+                            viewportFraction: 0.8,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: const Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                const Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: true,
+                            enlargeFactor: 0.3,
+                            scrollDirection: Axis.horizontal,
                           ),
-                          Center(
-                              child: container(
-                                  context,
-                                  'assets/images/wheel.jpg',
-                                  const WheelGame())),
-                        ],
-                      ),
+                          items: [
+                            newContainer(context, 'assets/images/horse.jpg',
+                                const HorseRaceScreen()),
+                            newContainer(context, 'assets/images/wheel.jpg',
+                                const WheelGame()),
+                          ]),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     container(context, 'assets/images/horse.jpg',
+                      //         const HorseRaceScreen()),
+                      //     const SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Center(
+                      //         child: container(
+                      //             context,
+                      //             'assets/images/wheel.jpg',
+                      //             const WheelGame())),
+                      //   ],
+                      // ),
                       Center(
                         child: Text(
                           'Game Zone\n          -',
@@ -175,7 +168,46 @@ class _DahboardState extends State<Dahboard> {
                       ),
                       const SizedBox(
                         height: 0,
-                      )
+                      ),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/coin.png',
+                              scale: 15,
+                            ),
+                            SizedBox(width: sized.size.width * 0.01),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Countup(
+                                    begin: 0,
+                                    end: 22.00,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    softWrap: false,
+                                    duration: const Duration(milliseconds: 500),
+                                    separator: ',',
+                                    style: theme.textTheme.headline1?.copyWith(
+                                        fontFamily: 'BebasNeue',
+                                        // fontStyle: FontStyle.italic,
+                                        // fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                                SizedBox(width: sized.size.width * 0.01),
+                                const Text(
+                                  '/Available coin',
+                                  style: TextStyle(
+                                      color: Colors.white60,
+                                      fontSize: 16,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

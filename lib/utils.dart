@@ -1,4 +1,33 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+snackbar(text, context) {
+  var snackBar = SnackBar(
+    backgroundColor: Colors.green.shade300,
+    content: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.04,
+      child: Text(
+        text,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+errorsnackBar(text, context) {
+  var errorsnackBar = SnackBar(
+    backgroundColor: Colors.red.shade300,
+    content: SizedBox(
+      height: MediaQuery.of(context).size.height * 0.08,
+      child: Text(
+        text,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(errorsnackBar);
+}
 
 class Button extends StatefulWidget {
   final String title;
@@ -40,13 +69,16 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
       width: double.infinity,
       child: ElevatedButton(
         style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0),
             // shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             //     RoundedRectangleBorder(
             //   borderRadius: BorderRadius.circular(12.0),
             // )),
-            backgroundColor: widget.loading ? MaterialStateProperty.all(
-                // Colors.grey.shade300,
-                Colors.white) : MaterialStateProperty.all(Colors.blue.shade300)
+            backgroundColor: widget.loading
+                ? MaterialStateProperty.all(
+                    // Colors.grey.shade300,
+                    Colors.transparent)
+                : MaterialStateProperty.all(Colors.blue.shade300)
 
             // elevation: MaterialStateProperty.all(2)
             ),

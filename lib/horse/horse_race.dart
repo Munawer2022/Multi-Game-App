@@ -7,7 +7,6 @@ import '../navigate.dart';
 import 'detail_screen.dart';
 
 class HorseRaceScreen extends StatefulWidget {
-  
   const HorseRaceScreen({super.key});
 
   @override
@@ -45,7 +44,6 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
-    
 
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 7));
@@ -66,7 +64,7 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         isRaceInProgress = false;
-        AppNavigator().push(context, const DetailScreen());
+        // AppNavigator().push(context, const DetailScreen());
       }
     });
   }
@@ -176,8 +174,8 @@ class RaceTrack extends StatelessWidget {
       children: [
         Image.asset(
           'assets/images/track.jpg',
-          height: 1200,
-          width: 1200,
+          // height: 1200,
+          width: double.infinity,
           fit: BoxFit.fill,
         ),
         position(horse1Position, 5, '1'),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../dashboard.dart';
+import '../../utils.dart';
 
 class RegisterProvider extends ChangeNotifier {
   final box = GetStorage();
@@ -25,11 +26,7 @@ class RegisterProvider extends ChangeNotifier {
     loadingBotton(true);
 
     return await registerRepository.registerPostApiResponse(data).then((value) {
-      var snackBar = SnackBar(
-        content: Text(value['user']),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      snackbar(value['user'], context);
       loadingBotton(false);
       AppNavigator().push(context, const Dahboard());
       debugPrint('\x1B[33m${value['token']}\x1B[0m');
@@ -44,11 +41,7 @@ class RegisterProvider extends ChangeNotifier {
       // box.write('email', value['user']['email']);
       // _response = value;
     }).onError((error, stackTrace) {
-      var snackBar = SnackBar(
-        content: Text(error.toString()),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      errorsnackBar(error.toString(), context);
       loadingBotton(false);
       errorShow = error;
       // Utils().errorSnackBarMessage(error.toString(), context);

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:animation/auth/login/login.dart';
+import 'package:animation/utils.dart';
 import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -34,11 +35,8 @@ class User extends StatelessWidget {
         var data = jsonDecode(response.body.toString());
 
         // AppNavigator().push(context, LoginScreen());
-        var snackBar = SnackBar(
-          content: Text(data['message']),
-        );
+        snackbar(data['message'], context);
 
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
         if (kDebugMode) {
           print(data);
         }

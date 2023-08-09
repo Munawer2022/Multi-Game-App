@@ -13,13 +13,15 @@ import 'auth/login/provider.dart';
 
 import 'dashboard.dart';
 import 'dog_race/dog_race_bid.dart';
+import 'horse/detail_screen.dart';
+import 'horse/horse_race.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => LoginProvider()),
     ChangeNotifierProvider(create: (_) => RegisterProvider()),
     ChangeNotifierProvider(create: (_) => HorseBidController()),
-    ChangeNotifierProvider(create: (_) => SpinnWheelBidController()),
+    // ChangeNotifierProvider(create: (_) => SpinnWheelBidController()),
     ChangeNotifierProvider(create: (_) => DogRaceBidController()),
   ], child: const MyApp()));
 }
@@ -41,6 +43,6 @@ class MyApp extends StatelessWidget {
           //   Theme.of(context).textTheme,
           // ),
         ),
-        home: const WheelGame());
+        home: WheelGame());
   }
 }
