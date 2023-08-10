@@ -268,8 +268,11 @@ Widget newContainer(BuildContext context, image, page) {
     child: Container(
       width: double.infinity,
       decoration: BoxDecoration(
+        border: Border.all(color: Colors.white, width: 3),
+        color: Colors.black87,
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
+          // opacity: .7,
           image: ExactAssetImage(image),
           fit: BoxFit.cover,
         ),

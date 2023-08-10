@@ -158,12 +158,9 @@ class User extends StatelessWidget {
                 //       style: TextStyle(color: Colors.white, fontSize: 20),
                 //     ),
                 SizedBox(height: sized.size.height * 0.02),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
-                  child: Divider(
-                    thickness: 1,
-                    color: Colors.white,
-                  ),
+                Divider(
+                  // thickness: 1,
+                  color: Colors.white,
                 ),
                 SizedBox(height: sized.size.height * 0.01),
                 Padding(
@@ -174,7 +171,7 @@ class User extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'won coin',
+                            'Won Coin',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -211,7 +208,7 @@ class User extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'loss coin',
+                            'Loss Coin',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -248,7 +245,7 @@ class User extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'withdraw coin',
+                            'Withdraw Coin',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -284,12 +281,9 @@ class User extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: sized.size.height * 0.02),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
-                  child: Divider(
-                    thickness: 1,
-                    color: Colors.white,
-                  ),
+                Divider(
+                  // thickness: 1,
+                  color: Colors.white,
                 ),
                 SizedBox(height: sized.size.height * 0.02),
                 Padding(

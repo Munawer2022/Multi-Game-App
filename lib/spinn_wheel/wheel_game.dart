@@ -19,6 +19,28 @@ class WheelGame extends StatefulWidget {
 }
 
 class _WheelGameState extends State<WheelGame> {
+  bool isWheelSpinning = false; // Track the spinning state of the wheel
+
+  // Function to start spinning the wheel
+  void startSpinning() {
+    setState(() {
+      isWheelSpinning = true;
+    });
+
+    // Simulate wheel spinning delay
+    Future.delayed(Duration(seconds: 5), () {
+      // Stop the wheel spinning
+      stopSpinning();
+    });
+  }
+
+  // Function to stop spinning the wheel
+  void stopSpinning() {
+    setState(() {
+      isWheelSpinning = false;
+    });
+  }
+
   @override
   void dispose() {
     // _controllerCenter.dispose();
@@ -27,19 +49,19 @@ class _WheelGameState extends State<WheelGame> {
   }
 
   final selected = BehaviorSubject<int>();
-  int rewards = 0;
+  dynamic rewards = 0;
 
-  List<int> items = [
-    8,
-    3,
-    2,
-    9,
-    11,
-    40,
-    0,
-    3,
-    12,
-    0,
+  List<dynamic> items = [
+    '5 coin',
+    'x 1',
+    '15 coin',
+    'x 1',
+    '5 coin',
+    'x 3',
+    '10 coin',
+    'x 2',
+    '20 coin',
+    'x 3',
     // 5,
     // 7,
     // 12,
@@ -104,13 +126,13 @@ class _WheelGameState extends State<WheelGame> {
           content: Text("You just won $rewards Coins!."),
           actions: <Widget>[
             CupertinoDialogAction(
-              child: Text('Cancel'),
+              child: Text('Back'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             CupertinoDialogAction(
-              child: Text('OK'),
+              child: Text('Retry?'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -198,7 +220,9 @@ class _WheelGameState extends State<WheelGame> {
             Text(
               'Lucky Spinn',
               style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  color: const Color(0xffFFF893), fontWeight: FontWeight.w900),
+                  fontStyle: FontStyle.italic,
+                  color: const Color(0xffFFF893),
+                  fontWeight: FontWeight.w900),
             ),
 
             Center(
@@ -242,19 +266,16 @@ class _WheelGameState extends State<WheelGame> {
                                   i < items.length;
                                   i++) ...<FortuneItem>{
                                 FortuneItem(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 110),
-                                    child: RotatedBox(
-                                      quarterTurns: 1,
-                                      child: Text(
-                                        items[i].toString(),
-                                      ),
-                                    ),
+                                  //   padding: EdgeInsets.only(left: 110),
+                                  // RotatedBox(
+                                  //  quarterTurns: 1,
+                                  child: Text(
+                                    items[i].toString(),
                                   ),
                                   style: FortuneItemStyle(
                                     textAlign: TextAlign.end,
                                     textStyle: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 24,
                                         fontWeight: FontWeight.bold),
                                     color: color[i],
                                     borderColor: Colors.yellow.shade700,
@@ -264,7 +285,7 @@ class _WheelGameState extends State<WheelGame> {
                               },
                             ],
                             onAnimationEnd: () {
-                              Future.delayed(Duration(milliseconds: 350), () {
+                              Future.delayed(Duration(milliseconds: 400), () {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -278,7 +299,7 @@ class _WheelGameState extends State<WheelGame> {
                               if (kDebugMode) {
                                 print(rewards);
                               }
-                              Future.delayed(Duration(milliseconds: 400), () {
+                              Future.delayed(Duration(milliseconds: 450), () {
                                 _showAlertDialog(context);
                               });
 
@@ -293,38 +314,51 @@ class _WheelGameState extends State<WheelGame> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: NeoPopButton(
-                color: Colors.red,
-                onTapUp: () {
-                  setState(() {
-                    selected.add(Fortune.randomInt(0, items.length));
-                  });
-                  HapticFeedback.vibrate();
-                },
-                onTapDown: () => HapticFeedback.vibrate(),
-                child: NeoPopShimmer(
-                  shimmerColor: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "SPIN",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(color: Colors.white),
+            isWheelSpinning
+                ? Container()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: NeoPopButton(
+                      color: Colors.red,
+                      onTapUp: isWheelSpinning
+                          ? null
+                          : () {
+                              setState(() {
+                                selected
+                                    .add(Fortune.randomInt(0, items.length));
+                              });
+                              HapticFeedback.vibrate();
+                              startSpinning();
+                            },
+                      // color: Colors.red,
+                      // onTapUp: () {
+                      //   setState(() {
+                      //     selected.add(Fortune.randomInt(0, items.length));
+                      //   });
+                      //   HapticFeedback.vibrate();
+                      // },
+                      onTapDown: () => HapticFeedback.vibrate(),
+                      child: NeoPopShimmer(
+                        shimmerColor: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "SPIN",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
             SizedBox(
               height: sized.size.height * .01,
             ),
@@ -337,11 +371,15 @@ class _WheelGameState extends State<WheelGame> {
                       color: const Color(0xffFFF893),
                       fontStyle: FontStyle.italic),
                 ),
+                Image.asset(
+                  'assets/images/coin.png',
+                  scale: 20,
+                ),
                 Text(
-                  '100 coin',
+                  '100',
                   style: Theme.of(context).textTheme.headline5?.copyWith(
                       color: const Color(0xffFFF893),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                       fontStyle: FontStyle.italic),
                 ),
               ],
