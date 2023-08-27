@@ -1,4 +1,4 @@
-package com.example.animation
+package com.highoncyber.gamezone
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -25,27 +25,22 @@ class LoginProvider extends ChangeNotifier {
     loadingBotton(true);
 
     return await loginRepository.loginPostApiResponse(data).then((value) {
-      snackbar(value['user'], context);
+      // snackbar(value['user'], context);
       // var snackBar = SnackBar(
       //   content: Text(value['user']),
       // );
 
       // ScaffoldMessenger.of(context).showSnackBar(snackBar);
       loadingBotton(false);
-      AppNavigator().push(context, const Dahboard());
-      debugPrint('\x1B[33m${value['token']}\x1B[0m');
-
-      box.write('token', value['token']);
-      box.write('name', value['name']);
-      box.write('mobile_no', value['mobile_no']);
-      // box.write('id', value['user']['id']);
-
-      // box.write('first_name', value['user']['first_name']);
-      // box.write('last_name', value['user']['last_name']);
-      // box.write('profile', value['user']['profile']);
-      // box.write('email', value['user']['email']);
-      // box.write('phone_number', value['user']['phone_number']);
-      // _response = value;
+      print(value);
+      if (value['status'] == "success") {
+        box.write('token', value['token']);
+        box.write('code', value['code']);
+        box.write('mobile_no', value['mobile_no']);
+        box.write('id', value['id']);
+        box.write('name', value['name']);
+        AppNavigator().push(context, const Dahboard());
+      }
     }).onError((error, stackTrace) {
       loadingBotton(false);
       // errorShow = error.val('message');

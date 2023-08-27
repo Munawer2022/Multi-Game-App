@@ -1,31 +1,56 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:animation/dashboard.dart';
 import 'package:animation/ticket_button/ticket_ui_screen.dart';
+import 'package:animation/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:neopop/utils/color_utils.dart';
 import 'package:provider/provider.dart';
-
+import 'package:http/http.dart' as http;
 import '../navigate.dart';
 
 class HorseBid extends StatefulWidget {
-  const HorseBid({super.key});
+  String hour, ampm;
+  HorseBid({required this.hour, required this.ampm, super.key});
 
   @override
   State<HorseBid> createState() => _HorseBidState();
 }
 
 class _HorseBidState extends State<HorseBid> {
+  final box = GetStorage();
+
   int hours = 1;
   int minutes = 60;
   int seconds = 0;
+  int availableCoins = 0;
+  void checkBalance() async {
+    String date = DateTime.now().toString();
+    var url = Uri.parse(
+        "https://cybermaxuk.com/gamezone/game_backend/public/api/check-user-balance?userId=" +
+            box.read('id').toString());
+
+    var response = await http.get(url, headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.acceptHeader: "application/json",
+    });
+    var responseData = json.decode(response.body);
+    print(responseData['coin_balance']);
+    String responseCoins = responseData['coin_balance'].toString();
+    availableCoins =
+        int.parse(responseCoins.substring(0, responseCoins.length - 3));
+  }
 
   @override
   void initState() {
     super.initState();
-    startTimer();
+    checkBalance();
+    // startTimer();
   }
 
   // @override
@@ -62,6 +87,9 @@ class _HorseBidState extends State<HorseBid> {
     });
   }
 
+  String bidText = "Minimum Bid";
+  String selectedAmount = "500", selectedHorse = "1";
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -81,16 +109,16 @@ class _HorseBidState extends State<HorseBid> {
     ];
     List<String> horseNumber = [
       "1",
-      "11",
-      "21",
-      "31",
-      "41",
-      "51",
-      "61",
-      '71',
-      '81',
-      '91',
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      '8',
+      '9',
     ];
+
     // List<bool> isSelected = List.generate(options.length, (_) => false);
 
     return Scaffold(
@@ -122,11 +150,15 @@ class _HorseBidState extends State<HorseBid> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('$hours:$minutes:$seconds',
+                            // Text('$hours:$minutes:$seconds',
+                            //     style: theme.textTheme.displayLarge?.copyWith(
+                            //         fontWeight: FontWeight.bold,
+                            //         color: Colors.white)),
+                            Text(widget.hour + ":00 " + widget.ampm,
                                 style: theme.textTheme.displayLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white)),
-                            Text('Betting Starts',
+                            Text('Race Starts',
                                 style: theme.textTheme.headline6?.copyWith(
                                   color: Colors.white,
                                 ))
@@ -167,8 +199,7 @@ class _HorseBidState extends State<HorseBid> {
                           child: Text('Race name',
                               style: theme.textTheme.titleMedium),
                         ),
-                        Text('Minimum bidding',
-                            style: theme.textTheme.titleMedium),
+                        Text(bidText, style: theme.textTheme.titleMedium),
                       ],
                     ),
                   ),
@@ -246,6 +277,8 @@ class _HorseBidState extends State<HorseBid> {
                                   selected: value.value2 == index,
                                   onSelected: (bool selected) {
                                     value.changeTabIndex2(index);
+                                    selectedHorse = (index + 1).toString();
+
                                     // selectedDate = date[value.value].toString();
                                   },
                                 ));
@@ -286,6 +319,9 @@ class _HorseBidState extends State<HorseBid> {
                                   selected: value.value == index,
                                   onSelected: (bool selected) {
                                     value.changeTabIndex(index);
+                                    selectedAmount = options[index].toString();
+                                    bidText = "Your bid";
+                                    setState(() {});
                                     // selectedDate = date[value.value].toString();
                                   },
                                 ));
@@ -340,7 +376,18 @@ class _HorseBidState extends State<HorseBid> {
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                                   theme.primaryColor.withOpacity(0.7))),
-                          onPressed: () {},
+                          onPressed: () {
+                            print(selectedAmount);
+                            if (availableCoins < int.parse(selectedAmount)) {
+                              errorsnackBar(
+                                  "You have insufficient coins", context);
+                            } else {
+                              box.write('myHorse', selectedHorse);
+                              box.write('myAmount', selectedAmount);
+                              box.write('myHour', widget.hour);
+                              snackbar("Your bid initiated", context);
+                            }
+                          },
                           child: Center(
                             child: Text(
                               'Submit your Bid',

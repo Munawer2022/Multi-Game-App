@@ -231,7 +231,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         backgroundColor: MaterialStateProperty.all(
                             theme.primaryColor.withOpacity(0.7))),
                     onPressed: () {
-                      AppNavigator().push(context, const HorseBid());
+                      // AppNavigator().push(context, const HorseBid());
                     },
                     label: Text(
                       'Again ?',

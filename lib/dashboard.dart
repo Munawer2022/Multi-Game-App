@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:animation/horse/horse_bid.dart';
 import 'package:animation/horse/horse_race.dart';
@@ -14,7 +15,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+
+import 'auth/login/login.dart';
 
 class Dahboard extends StatefulWidget {
   const Dahboard({super.key});
@@ -23,7 +28,28 @@ class Dahboard extends StatefulWidget {
   State<Dahboard> createState() => _DahboardState();
 }
 
+final box = GetStorage();
+
 class _DahboardState extends State<Dahboard> {
+  int availableCoins = 0;
+  void checkBalance() async {
+    String date = DateTime.now().toString();
+    var url = Uri.parse(
+        "https://cybermaxuk.com/gamezone/game_backend/public/api/check-user-balance?userId=" +
+            box.read('id').toString());
+
+    var response = await http.get(url, headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.acceptHeader: "application/json",
+    });
+    var responseData = json.decode(response.body);
+    print(responseData['coin_balance']);
+    String responseCoins = responseData['coin_balance'].toString();
+    availableCoins =
+        int.parse(responseCoins.substring(0, responseCoins.length - 3));
+    setState(() {});
+  }
+
   @override
   initState() {
     super.initState();
@@ -31,6 +57,7 @@ class _DahboardState extends State<Dahboard> {
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ]);
+    checkBalance();
   }
 
   @override
@@ -46,10 +73,10 @@ class _DahboardState extends State<Dahboard> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var sized = MediaQuery.of(context);
-    List items = [
-      newContainer(context, 'assets/images/horse.jpg', const HorseRaceScreen()),
-      // newContainer(context, 'assets/images/wheel.jpg', const SpinnWheelBid()),
-    ];
+    // List items = [
+    //   newContainer(context, 'assets/images/horse.jpg', const HorseRaceScreen()),
+    //   // newContainer(context, 'assets/images/wheel.jpg', const SpinnWheelBid()),
+    // ];
     return WillPopScope(
       onWillPop: () async {
         await SystemNavigator.pop();
@@ -94,7 +121,11 @@ class _DahboardState extends State<Dahboard> {
                         children: [
                           IconButton(
                               onPressed: () {
-                                AppNavigator().push(context, User());
+                                if (box.read('token') == null) {
+                                  AppNavigator().push(context, LoginScreen());
+                                } else {
+                                  AppNavigator().push(context, User());
+                                }
                               },
                               icon: CircleAvatar(
                                   maxRadius: 40,
@@ -126,7 +157,7 @@ class _DahboardState extends State<Dahboard> {
                             initialPage: 0,
                             enableInfiniteScroll: true,
                             reverse: false,
-                            autoPlay: true,
+                            autoPlay: false,
                             autoPlayInterval: const Duration(seconds: 3),
                             autoPlayAnimationDuration:
                                 const Duration(milliseconds: 800),
@@ -136,10 +167,8 @@ class _DahboardState extends State<Dahboard> {
                             scrollDirection: Axis.horizontal,
                           ),
                           items: [
-                            newContainer(context, 'assets/images/horse.jpg',
-                                const HorseRaceScreen()),
-                            newContainer(context, 'assets/images/wheel.jpg',
-                                const WheelGame()),
+                            newContainer(context, 'assets/images/horse.jpg'),
+                            newContainer(context, 'assets/images/wheel.jpg'),
                           ]),
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.center,
@@ -184,7 +213,7 @@ class _DahboardState extends State<Dahboard> {
                               children: [
                                 Countup(
                                     begin: 0,
-                                    end: 22.00,
+                                    end: availableCoins.toDouble(),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                     softWrap: false,
@@ -256,14 +285,48 @@ Widget container(BuildContext context, image, page) {
   );
 }
 
-Widget newContainer(BuildContext context, image, page) {
+Widget newContainer(BuildContext context, image) {
+  void checkRace() async {
+    String date = DateTime.now().toString();
+    var url = Uri.parse(
+        "https://cybermaxuk.com/gamezone/game_backend/public/api/check-race?datetime=$date");
+
+    var response = await http.get(url, headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.acceptHeader: "application/json",
+    });
+    var responseData = json.decode(response.body);
+    print(responseData);
+    String hour =
+        (int.parse(DateFormat('hh').format(DateTime.now())) + 1).toString();
+    String ampm = DateFormat('a').format(DateTime.now());
+
+    print(ampm);
+    if (responseData["message"] ==
+        "No race available on the specified time within the next 5 minutes.") {
+      AppNavigator().push(context, HorseBid(hour: hour, ampm: ampm));
+    } else if (responseData["message"] ==
+        "Race is available on the specified time.") {
+      print(responseData['winner_horse_no']);
+      AppNavigator().push(
+          context,
+          HorseRaceScreen(
+              winnerHorse: responseData['winner_horse_no'].toString()));
+    }
+  }
+
   return InkWell(
     borderRadius: BorderRadius.circular(60),
     onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => page),
-      );
+      if (box.read('token') == null) {
+        AppNavigator().push(context, LoginScreen());
+      } else {
+        if (image == "assets/images/horse.jpg") {
+          checkRace();
+        } else {
+          AppNavigator().push(context, WheelGame());
+        }
+      }
     },
     child: Container(
       width: double.infinity,

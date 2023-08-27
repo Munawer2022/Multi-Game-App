@@ -106,10 +106,11 @@ class _SplashScreenState extends State<SplashScreen>
 class SplashServices {
   final box = GetStorage();
   void check(BuildContext context) {
-    if (box.read('token') != null) {
-      AppNavigator().push(context, const Dahboard());
-    } else {
-      AppNavigator().push(context, LoginScreen());
-    }
+    // if (box.read('token') != null) {
+    //   AppNavigator().push(context, const Dahboard());
+    // } else {
+    //   AppNavigator().push(context, LoginScreen());
+    // }
+    AppNavigator().push(context, const Dahboard());
   }
 }

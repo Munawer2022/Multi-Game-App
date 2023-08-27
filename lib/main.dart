@@ -5,6 +5,7 @@ import 'package:animation/spinn_wheel/lucky_spinn_wheel.dart';
 import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:animation/spinn_wheel/wheel_game.dart';
 import 'package:animation/splash_screen.dart';
+import 'package:animation/transfer/provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => HorseBidController()),
     // ChangeNotifierProvider(create: (_) => SpinnWheelBidController()),
     ChangeNotifierProvider(create: (_) => DogRaceBidController()),
+    ChangeNotifierProvider(create: (_) => TransferProvider()),
   ], child: const MyApp()));
 }
 

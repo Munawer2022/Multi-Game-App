@@ -1,83 +1,73 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:animation/auth/login/login.dart';
 import 'package:animation/auth/login/provider.dart';
+import 'package:animation/auth/register/provider.dart';
 
 import 'package:animation/dashboard.dart';
+import 'package:animation/transfer/provider.dart';
 import 'package:animation/utils.dart';
+import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-
+import 'package:http/http.dart' as http;
 import '../../navigate.dart';
-import '../register/register.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+class TransferScreen extends StatefulWidget {
+  TransferScreen({Key? key}) : super(key: key);
 
-  final TextEditingController _usernameController = TextEditingController();
+  @override
+  State<TransferScreen> createState() => _TransferScreenState();
+}
 
-  final TextEditingController _passwordController = TextEditingController();
+class _TransferScreenState extends State<TransferScreen> {
+  final TextEditingController _receiverCodeController = TextEditingController();
 
-  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _coinsController = TextEditingController();
 
 //   void register(BuildContext context) async {
-//     try {
-//       Response response = await post(
-//         Uri.parse('http://10.0.2.2:8000/api/login'),
-//         body: {
-//           'name': _usernameController.text.toString(),
-//           'password': _passwordController.text.toString(),
-//           'mobile_no': _numberController.text.toString(),
-//         },
-//         headers: {'Accept': 'application/json'},
-//       );
-//       loadingBotton(true);
-
-//       if (response.statusCode == 200) {
-//         loadingBotton(true);
-//         // AppNavigator().push(context, const Dahboard());
-//         var data = jsonDecode(response.body.toString());
-
-//         // AppNavigator().push(context, LoginScreen());
-//         var snackBar = SnackBar(
-//           content: Text(data['user']),
-//         );
-
-//         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-//         if (kDebugMode) {
-//           print(data);
-//         }
-//       } else if (response.statusCode == 401) {
-//         loadingBotton(false);
-//         var data = jsonDecode(response.body.toString());
-//         var snackBar = SnackBar(
-//           content: Text(data['message']),
-//         );
-
-// // Find the ScaffoldMessenger in the widget tree
-// // and use it to show a SnackBar.
-//         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-//         if (kDebugMode) {
-//           print(data['message']);
-//         }
-//       }
-//     } catch (e) {
-//       if (kDebugMode) {
-//         print(e.toString());
-//       }
-//     }
-//   }
-
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  initState() {
+    super.initState();
+
+    checkBalance();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  int availableCoins = 0;
+  void checkBalance() async {
+    String date = DateTime.now().toString();
+    var url = Uri.parse(
+        "https://cybermaxuk.com/gamezone/game_backend/public/api/check-user-balance?userId=" +
+            box.read('id').toString());
+
+    var response = await http.get(url, headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.acceptHeader: "application/json",
+    });
+    var responseData = json.decode(response.body);
+    print(responseData['coin_balance']);
+    String responseCoins = responseData['coin_balance'].toString();
+    availableCoins =
+        int.parse(responseCoins.substring(0, responseCoins.length - 3));
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    final loginController = Provider.of<LoginProvider>(context);
-    // print(loginController.errorShow['message'].toString());
+    final transferController = Provider.of<TransferProvider>(context);
 
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
@@ -85,7 +75,6 @@ class LoginScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         // await SystemNavigator.pop();
-        // return true;
         Navigator.pop(context);
         return true;
       },
@@ -111,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Login',
+                            'Transfer Coins',
                             style: theme.textTheme.displayLarge?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -122,6 +111,50 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 color: Colors.black87,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/coin.png',
+                      scale: 15,
+                    ),
+                    SizedBox(
+                      width: 2,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Countup(
+                            begin: 0,
+                            end: availableCoins.toDouble(),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            softWrap: false,
+                            duration: const Duration(milliseconds: 500),
+                            separator: ',',
+                            style: theme.textTheme.headline1?.copyWith(
+                                fontFamily: 'BebasNeue',
+                                // fontStyle: FontStyle.italic,
+                                // fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                        // SizedBox(width: sized.size.width * 0.01),
+                        const Text(
+                          '/Available coin',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -146,23 +179,12 @@ class LoginScreen extends StatelessWidget {
                       //     controller: _usernameController,
                       //     keyboardType: TextInputType.name,
                       //     hintText: 'Enter Name'),
-                      // textfield(
-                      //   _usernameController,
-                      //   'Name',
-                      //   (value) {
-                      //     if (value!.isEmpty) {
-                      //       return 'Enter Name';
-                      //     } else {
-                      //       return null;
-                      //     }
-                      //   },
-                      // ),
                       textfield(
-                        _numberController,
-                        'Mobile No',
+                        _receiverCodeController,
+                        'Enter receiver code',
                         (value) {
                           if (value!.isEmpty) {
-                            return 'Enter Mobile No';
+                            return 'Enter receiver code';
                           } else {
                             return null;
                           }
@@ -172,11 +194,11 @@ class LoginScreen extends StatelessWidget {
                         height: 10,
                       ),
                       textfield(
-                        _passwordController,
-                        'Password',
+                        _coinsController,
+                        'Enter coins to transfer',
                         (value) {
                           if (value!.isEmpty) {
-                            return 'Enter Password';
+                            return 'Enter number of coins';
                           } else {
                             return null;
                           }
@@ -187,14 +209,17 @@ class LoginScreen extends StatelessWidget {
                         height: 40,
                       ),
                       Button(
-                          loading: loginController.loading,
-                          title: 'Login',
+                          loading: transferController.loading,
+                          title: 'Tranfer',
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
-                              loginController.loginPostApiResponse(context, {
-                                // 'name': _usernameController.text.toString(),
-                                'password': _passwordController.text.toString(),
-                                'mobile_no': _numberController.text.toString(),
+                              transferController
+                                  .transferPostApiResponse(context, {
+                                'from_user_code': box.read('code'),
+                                'to_user_code':
+                                    _receiverCodeController.text.toString(),
+                                'coin_type': '1',
+                                'coins': _coinsController.text.toString(),
                               });
                             }
                           }
@@ -228,28 +253,28 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Don't have an account ?",
-                              style: theme.textTheme.titleMedium),
-                          TextButton(
-                              // style: ButtonStyle(
-                              //     backgroundColor: MaterialStateProperty.all(
-                              //         Colors.blue.shade300)),
-                              onPressed: () {
-                                AppNavigator().push(context, RegisterScreen());
-                              },
-                              child:
-                                  //  const CircularProgressIndicator()
-                                  Text(
-                                'Register',
-                                style: theme.textTheme.titleMedium?.copyWith(
-                                    color: Colors.blue.shade300,
-                                    fontWeight: FontWeight.bold),
-                              ))
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Text("Already have an account ?",
+                      //         style: theme.textTheme.titleMedium),
+                      //     TextButton(
+                      //         // style: ButtonStyle(
+                      //         //     backgroundColor: MaterialStateProperty.all(
+                      //         //         Colors.blue.shade300)),
+                      //         onPressed: () {
+                      //           AppNavigator().push(context, LoginScreen());
+                      //         },
+                      //         child:
+                      //             //  const CircularProgressIndicator()
+                      //             Text(
+                      //           'Login',
+                      //           style: theme.textTheme.titleMedium?.copyWith(
+                      //               color: Colors.blue.shade300,
+                      //               fontWeight: FontWeight.bold),
+                      //         ))
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
@@ -264,16 +289,16 @@ class LoginScreen extends StatelessWidget {
 
 Widget textfield(controller, name, validator) {
   return CupertinoTextFormFieldRow(
-    decoration: BoxDecoration(
-        color: Colors.white, border: Border.all(color: Colors.black12)),
-    validator: validator,
-    // padding: const EdgeInsets.all(15),
-    controller: controller,
-    placeholder: name,
-    obscureText: name == "Password" ? true : false,
-    keyboardType:
-        name == "Mobile No" ? TextInputType.number : TextInputType.text,
-  );
+      decoration: BoxDecoration(
+          color: Colors.white, border: Border.all(color: Colors.black12)),
+      validator: validator,
+      obscureText: name == "Password" ? true : false,
+      keyboardType: name == "Enter coins to transfer"
+          ? TextInputType.number
+          : TextInputType.text,
+      // padding: const EdgeInsets.all(15),
+      controller: controller,
+      placeholder: name);
 }
 
 // class TypeTextFieldComponent extends StatelessWidget {

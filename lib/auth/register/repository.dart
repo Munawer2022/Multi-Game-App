@@ -13,7 +13,7 @@ class RegisterRepository implements RegisterBaseApiServices {
     dynamic responseJson;
     try {
       Response response = await post(
-        Uri.parse('http://10.0.2.2:8000/api/register'),
+        Uri.parse('https://cybermaxuk.com/gamezone/game_backend/public/api/register'),
         body: data,
         headers: {
           'Accept': 'application/json',

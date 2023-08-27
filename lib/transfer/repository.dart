@@ -1,18 +1,21 @@
 import 'dart:io';
 
 import 'package:animation/auth/login/base_api_services.dart';
+import 'package:animation/auth/register/base_api_services.dart';
+import 'package:animation/transfer/base_api_services.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class LoginRepository implements LoginBaseApiServices {
+class TransferRepository implements TransferBaseApiServices {
   @override
-  Future<dynamic> loginPostApiResponse(dynamic data) async {
+  Future<dynamic> transferPostApiResponse(dynamic data) async {
     dynamic responseJson;
     try {
       Response response = await post(
-        Uri.parse('https://cybermaxuk.com/gamezone/game_backend/public/api/login'),
+        Uri.parse(
+            'https://cybermaxuk.com/gamezone/game_backend/public/api/available_coins'),
         body: data,
         headers: {
           'Accept': 'application/json',
@@ -28,13 +31,15 @@ class LoginRepository implements LoginBaseApiServices {
 
 dynamic returnResponse(http.Response response) {
   switch (response.statusCode) {
-    case 200:
+    case 201:
       dynamic responseJson = jsonDecode(response.body);
 
       return responseJson;
-    case 401:
-      throw BadRequestException(response.body);
+    case 200:
+      // throw BadRequestException(response.body);
+      dynamic responseJson = jsonDecode(response.body);
 
+      return responseJson;
     case 500:
     case 404:
       throw UnauthorisedException(response.body);

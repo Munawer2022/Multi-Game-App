@@ -83,7 +83,8 @@ class RegisterScreen extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        await SystemNavigator.pop();
+        // await SystemNavigator.pop();
+        Navigator.pop(context);
         return true;
       },
       child: Scaffold(
@@ -173,10 +174,10 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       textfield(
                         _numberController,
-                        'Phone No',
+                        'Mobile No',
                         (value) {
                           if (value!.isEmpty) {
-                            return 'Enter Phone No';
+                            return 'Enter Mobile No';
                           } else {
                             return null;
                           }
@@ -195,6 +196,7 @@ class RegisterScreen extends StatelessWidget {
                                 'name': _usernameController.text.toString(),
                                 'password': _passwordController.text.toString(),
                                 'mobile_no': _numberController.text.toString(),
+                                'type': "1"
                               });
                             }
                           }
@@ -264,12 +266,16 @@ class RegisterScreen extends StatelessWidget {
 
 Widget textfield(controller, name, validator) {
   return CupertinoTextFormFieldRow(
-      decoration: BoxDecoration(
-          color: Colors.white, border: Border.all(color: Colors.black12)),
-      validator: validator,
-      // padding: const EdgeInsets.all(15),
-      controller: controller,
-      placeholder: name);
+    decoration: BoxDecoration(
+        color: Colors.white, border: Border.all(color: Colors.black12)),
+    validator: validator,
+    obscureText: name == "Password" ? true : false,
+    // padding: const EdgeInsets.all(15),
+    controller: controller,
+    placeholder: name,
+    keyboardType:
+        name == "Mobile No" ? TextInputType.number : TextInputType.text,
+  );
 }
 
 // class TypeTextFieldComponent extends StatelessWidget {

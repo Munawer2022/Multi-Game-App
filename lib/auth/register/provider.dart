@@ -26,20 +26,17 @@ class RegisterProvider extends ChangeNotifier {
     loadingBotton(true);
 
     return await registerRepository.registerPostApiResponse(data).then((value) {
-      snackbar(value['user'], context);
       loadingBotton(false);
-      AppNavigator().push(context, const Dahboard());
-      debugPrint('\x1B[33m${value['token']}\x1B[0m');
-      debugPrint(value['token']);
-      box.write('token', value['token']);
-      box.write('name', value['name']);
-      box.write('mobile_no', value['mobile_no']);
-      // box.write('id', value['user']['id']);
 
-      // box.write('last_name', value['user']['last_name']);
-      // box.write('profile', value['user']['profile']);
-      // box.write('email', value['user']['email']);
-      // _response = value;
+      print(value['status']);
+      if (value['status'] == "success") {
+        box.write('token', value['token']);
+        box.write('code', value['code']);
+        box.write('mobile_no', value['mobile_no']);
+        box.write('id', value['id']);
+        box.write('name', value['name']);
+        AppNavigator().push(context, const Dahboard());
+      }
     }).onError((error, stackTrace) {
       errorsnackBar(error.toString(), context);
       loadingBotton(false);

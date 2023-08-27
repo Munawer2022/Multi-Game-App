@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.animation">
+    package="com.highoncyber.gamezone">
     <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
    <application
-        android:label="animation"
+        android:label="Game Zone"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"        
         android:usesCleartextTraffic="true"

@@ -7,7 +7,8 @@ import '../navigate.dart';
 import 'detail_screen.dart';
 
 class HorseRaceScreen extends StatefulWidget {
-  const HorseRaceScreen({super.key});
+  String winnerHorse;
+  HorseRaceScreen({required this.winnerHorse, super.key});
 
   @override
   _HorseRaceScreenState createState() => _HorseRaceScreenState();
@@ -46,7 +47,7 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
     ]);
 
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 7));
+        AnimationController(vsync: this, duration: const Duration(seconds: 18));
 
     _animationController.addListener(() {
       setState(() {
@@ -67,20 +68,86 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
         // AppNavigator().push(context, const DetailScreen());
       }
     });
+
+    Future.delayed(Duration(seconds: 2), () {
+      _startRace();
+    });
   }
 
   void _startRace() {
     if (!isRaceInProgress) {
       setState(() {
-        random1 = Random().nextInt(500) + 300;
-        random2 = Random().nextInt(500) + 300;
-        random3 = Random().nextInt(500) + 300;
-        random4 = Random().nextInt(500) + 300;
-        random5 = Random().nextInt(500) + 300;
-        random6 = Random().nextInt(500) + 300;
-        random7 = Random().nextInt(500) + 300;
-        random8 = Random().nextInt(500) + 300;
-        random9 = Random().nextInt(500) + 300;
+        if (widget.winnerHorse == "1") {
+          print("Winner is 1");
+          random1 = Random().nextInt(610) + 600;
+          ;
+        } else {
+          random1 = Random().nextInt(500) + 300;
+        }
+        if (widget.winnerHorse == "2") {
+          print("Winner is 2");
+          random2 = Random().nextInt(610) + 600;
+          ;
+        } else {
+          random2 = Random().nextInt(500) + 300;
+        }
+        if (widget.winnerHorse == "3") {
+          print("Winner is 3");
+          random3 = Random().nextInt(610) + 600;
+        } else {
+          random3 = Random().nextInt(500) + 300;
+        }
+        if (widget.winnerHorse == "4") {
+          print("Winner is 4");
+          random4 = Random().nextInt(610) + 600;
+          ;
+        } else {
+          random4 = Random().nextInt(500) + 300;
+        }
+        if (widget.winnerHorse == "5") {
+          print("Winner is 5");
+          random5 = Random().nextInt(610) + 600;
+          ;
+        } else {
+          random5 = Random().nextInt(500) + 300;
+        }
+        if (widget.winnerHorse == "6") {
+          print("Winner is 6");
+          random6 = Random().nextInt(610) + 600;
+          ;
+        } else {
+          random6 = Random().nextInt(500) + 300;
+        }
+        if (widget.winnerHorse == "7") {
+          print("Winner is 7");
+          random7 = Random().nextInt(610) + 600;
+          ;
+        } else {
+          random7 = Random().nextInt(500) + 300;
+        }
+        if (widget.winnerHorse == "8") {
+          print("Winner is 8");
+          random8 = Random().nextInt(610) + 600;
+          ;
+        } else {
+          random8 = Random().nextInt(500) + 300;
+        }
+        if (widget.winnerHorse == "9") {
+          print("Winner is 9");
+          random9 = Random().nextInt(610) + 600;
+        } else {
+          random9 = Random().nextInt(500) + 300;
+        }
+
+        // random1 = Random().nextInt(500) + 300;
+        // random2 = Random().nextInt(500) + 300;
+        // random3 = Random().nextInt(500) + 300;
+        // random4 = Random().nextInt(500) + 300;
+        // random5 = Random().nextInt(500) + 300;
+        // random6 = Random().nextInt(500) + 300;
+        // random7 = Random().nextInt(500) + 300;
+        // random8 = Random().nextInt(500) + 300;
+        // random9 = Random().nextInt(500) + 300;
 
         isRaceInProgress = true;
         horse1Position = 0.0;
@@ -127,18 +194,18 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
               horse8Position: horse8Position,
               horse9Position: horse9Position,
             ),
-            Center(
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Theme.of(context).primaryColor)),
-                onPressed: _startRace,
-                child: const Text(
-                  ' Start Race',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: ElevatedButton(
+            //     style: ButtonStyle(
+            //         backgroundColor: MaterialStateProperty.all(
+            //             Theme.of(context).primaryColor)),
+            //     onPressed: _startRace,
+            //     child: const Text(
+            //       ' Start Race',
+            //       style: TextStyle(color: Colors.white),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
