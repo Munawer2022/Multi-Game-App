@@ -169,6 +169,7 @@ class _DahboardState extends State<Dahboard> {
                           items: [
                             newContainer(context, 'assets/images/horse.jpg'),
                             newContainer(context, 'assets/images/wheel.jpg'),
+                               newContainer(context, 'assets/images/back.jpg'),
                           ]),
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.center,
@@ -249,41 +250,41 @@ class _DahboardState extends State<Dahboard> {
   }
 }
 
-Widget container(BuildContext context, image, page) {
-  return InkWell(
-    borderRadius: BorderRadius.circular(60),
-    onTap: () {
-      DateTime dateTime = DateTime.now();
+// Widget container(BuildContext context, image, page) {
+//   return InkWell(
+//     borderRadius: BorderRadius.circular(60),
+//     onTap: () {
+//       DateTime dateTime = DateTime.now();
 
-      debugPrint('\x1B[33m$dateTime\x1B[0m'
-          // dateTime.toString()
-          );
-      AppNavigator().push(context, page);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => page),
-      // );
-    },
-    child: Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          image: ExactAssetImage(image),
-          fit: BoxFit.cover,
-        ),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey.withOpacity(.5),
-        //     blurRadius: 13,
-        //     offset: Offset(-4, 8),
-        //   ),
-        // ],
-      ),
-    ),
-  );
-}
+//       debugPrint('\x1B[33m$dateTime\x1B[0m'
+//           // dateTime.toString()
+//           );
+//       AppNavigator().push(context, page);
+//       // Navigator.push(
+//       //   context,
+//       //   MaterialPageRoute(builder: (context) => page),
+//       // );
+//     },
+//     child: Container(
+//       width: 100,
+//       height: 100,
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(20),
+//         image: DecorationImage(
+//           image: ExactAssetImage(image),
+//           fit: BoxFit.cover,
+//         ),
+//         // boxShadow: [
+//         //   BoxShadow(
+//         //     color: Colors.grey.withOpacity(.5),
+//         //     blurRadius: 13,
+//         //     offset: Offset(-4, 8),
+//         //   ),
+//         // ],
+//       ),
+//     ),
+//   );
+// }
 
 Widget newContainer(BuildContext context, image) {
   void checkRace() async {
