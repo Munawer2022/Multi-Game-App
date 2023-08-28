@@ -20,6 +20,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import 'auth/login/login.dart';
+import 'ludo/main_screen.dart';
 
 class Dahboard extends StatefulWidget {
   const Dahboard({super.key});
@@ -128,24 +129,38 @@ class _DahboardState extends State<Dahboard> {
                                 }
                               },
                               icon: CircleAvatar(
-                                  maxRadius: 40,
-                                  backgroundColor:
-                                      Colors.white.withOpacity(0.3),
-                                  child: const Center(
-                                      child: Icon(
-                                    CupertinoIcons.person_alt,
-                                    size: 40,
-                                    color: Colors.white,
-                                  )))),
+                                maxRadius: 43,
+                                backgroundColor: Colors.white,
+                                child: CircleAvatar(
+                                    maxRadius: 40,
+                                    backgroundColor: Colors.black,
+                                    child: const Center(
+                                        child: Icon(
+                                      CupertinoIcons.game_controller_solid,
+                                      size: 40,
+                                      color: Colors.white,
+                                    ))),
+                              )),
                           Text(
-                            'Dashboard',
+                            'User Profile',
                             style: Theme.of(context)
                                 .textTheme
-                                .displayMedium
+                                .headline4
                                 ?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                    fontStyle: FontStyle.italic,
                                     color: Colors.white,
-                                    fontFamily: 'BebasNeue'),
+                                    fontFamily: 'Open Sans'),
                           ),
+                          // Text(
+                          //   'Dashboard',
+                          //   style: Theme.of(context)
+                          //       .textTheme
+                          //       .displayMedium
+                          //       ?.copyWith(
+                          //           color: Colors.white,
+                          //           fontFamily: 'BebasNeue'),
+                          // ),
                         ],
                       ),
 
@@ -169,7 +184,8 @@ class _DahboardState extends State<Dahboard> {
                           items: [
                             newContainer(context, 'assets/images/horse.jpg'),
                             newContainer(context, 'assets/images/wheel.jpg'),
-                               newContainer(context, 'assets/images/back.jpg'),
+                            newContainer(
+                                context, 'assets/images/ludo_slide_back.png'),
                           ]),
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.center,
