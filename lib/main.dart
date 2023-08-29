@@ -1,6 +1,7 @@
 import 'package:animation/auth/login/login.dart';
 import 'package:animation/auth/register/provider.dart';
 import 'package:animation/horse/horse_bid.dart';
+import 'package:animation/ludo/main_screen.dart';
 
 import 'package:animation/spinn_wheel/lucky_spinn_wheel.dart';
 import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
@@ -83,6 +84,8 @@ class _MyAppState extends State<MyApp> {
           //   Theme.of(context).textTheme,
           // ),
         ),
-        home: SplashScreen());
+        home: HorseRaceScreen(
+          winnerHorse: '7',
+        ));
   }
 }

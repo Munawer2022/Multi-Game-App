@@ -1,3 +1,4 @@
+import 'package:animation/ludo/constants.dart';
 import 'package:animation/ludo/widgets/board_widget.dart';
 import 'package:animation/ludo/widgets/dice_widget.dart';
 import 'package:countup/countup.dart';
@@ -72,8 +73,8 @@ class MainScreen extends StatelessWidget {
                     'assets/images/coin.png',
                     scale: 15,
                   ),
-                  SizedBox(width: 5),
-                  Text(
+                  const SizedBox(width: 5),
+                  const Text(
                     '2000',
                     style: TextStyle(
                         color: Colors.white,
@@ -83,7 +84,7 @@ class MainScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(
+              const Text(
                 'Winning Coins',
                 style: TextStyle(
                     fontSize: 12,
@@ -107,8 +108,8 @@ class MainScreen extends StatelessWidget {
                       'assets/images/coin.png',
                       scale: 15,
                     ),
-                    SizedBox(width: 5),
-                    Text(
+                    const SizedBox(width: 5),
+                    const Text(
                       '2000',
                       style: TextStyle(
                           color: Colors.white,
@@ -118,7 +119,7 @@ class MainScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
+                const Text(
                   'Your Coins',
                   style: TextStyle(
                       color: Colors.white,
@@ -153,26 +154,42 @@ class MainScreen extends StatelessWidget {
                         // mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(height: sized.size.height * 0.08),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 rightUser(
-                                  Alignment.centerLeft,
-                                ),
-                                leftUser(Alignment.centerRight),
+                                    Alignment.centerLeft,
+                                    value.currentPlayer.color == LudoColor.green
+                                        ? DiceWidget()
+                                        : null),
+                                leftUser(
+                                    Alignment.centerRight,
+                                    value.currentPlayer.color ==
+                                            LudoColor.yellow
+                                        ? DiceWidget()
+                                        : null),
                               ],
                             ),
                           ),
-                          BoardWidget(),
+                          const BoardWidget(),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                rightUser(Alignment.centerLeft),
-                                leftUser(Alignment.centerRight),
+                                rightUser(
+                                    Alignment.centerLeft,
+                                    value.currentPlayer.color == LudoColor.red
+                                        ? DiceWidget()
+                                        : null),
+                                leftUser(
+                                    Alignment.centerRight,
+                                    value.currentPlayer.color == LudoColor.blue
+                                        ? DiceWidget()
+                                        : null),
                               ],
                             ),
                           ),
@@ -226,9 +243,7 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  Widget rightUser(
-    alignment,
-  ) {
+  Widget rightUser(alignment, widget) {
     return Builder(builder: (context) {
       return Align(
         alignment: alignment,
@@ -237,7 +252,7 @@ class MainScreen extends StatelessWidget {
             Column(
               // alignment: Alignment.bottomCenter,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 33,
                   backgroundColor: Colors.white,
                   child: CircleAvatar(
@@ -267,18 +282,18 @@ class MainScreen extends StatelessWidget {
                 //     ],
                 //   ),
                 // )),
-                SizedBox(height: 5),
-                Text(
+                const SizedBox(height: 5),
+                const Text(
                   'Ifham',
                   style: TextStyle(color: Colors.white),
                 )
               ],
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             SizedBox(
               width: 50,
               height: 50,
-              child: DiceWidget(),
+              child: widget,
             ),
           ],
         ),
@@ -286,9 +301,7 @@ class MainScreen extends StatelessWidget {
     });
   }
 
-  Widget leftUser(
-    alignment,
-  ) {
+  Widget leftUser(alignment, widget) {
     return Builder(builder: (context) {
       return Align(
         alignment: alignment,
@@ -297,13 +310,13 @@ class MainScreen extends StatelessWidget {
             SizedBox(
               width: 50,
               height: 50,
-              child: DiceWidget(),
+              child: widget,
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             Column(
               // alignment: Alignment.bottomCenter,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 33,
                   backgroundColor: Colors.white,
                   child: CircleAvatar(
@@ -333,8 +346,8 @@ class MainScreen extends StatelessWidget {
                 //     ],
                 //   ),
                 // )),
-                SizedBox(height: 5),
-                Text(
+                const SizedBox(height: 5),
+                const Text(
                   'Ifham',
                   style: TextStyle(color: Colors.white),
                 )

@@ -8,6 +8,7 @@ import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:animation/spinn_wheel/wheel_game.dart';
 import 'package:animation/ticket_button/ticket_ui_screen.dart';
 import 'package:animation/user.dart';
+import 'package:animation/utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:countup/countup.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
@@ -225,32 +226,7 @@ class _DahboardState extends State<Dahboard> {
                               scale: 15,
                             ),
                             SizedBox(width: sized.size.width * 0.01),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Countup(
-                                    begin: 0,
-                                    end: availableCoins.toDouble(),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    softWrap: false,
-                                    duration: const Duration(milliseconds: 500),
-                                    separator: ',',
-                                    style: theme.textTheme.headline1?.copyWith(
-                                        fontFamily: 'BebasNeue',
-                                        // fontStyle: FontStyle.italic,
-                                        // fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                                SizedBox(width: sized.size.width * 0.01),
-                                const Text(
-                                  '/Available coin',
-                                  style: TextStyle(
-                                      color: Colors.white60,
-                                      fontSize: 16,
-                                      fontStyle: FontStyle.italic),
-                                ),
-                              ],
-                            ),
+                            availableCoin(context, availableCoins)
                           ],
                         ),
                       ),

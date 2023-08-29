@@ -1,3 +1,4 @@
+import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +6,7 @@ snackbar(text, context) {
   var snackBar = SnackBar(
     backgroundColor: Colors.green.shade300,
     content: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.04,
+      height: MediaQuery.of(context).size.height * 0.04,
       child: Text(
         text,
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -99,4 +100,31 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
       ),
     );
   }
+}
+
+Widget availableCoin(context, availableCoins) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Countup(
+          begin: 0,
+          end: availableCoins.toDouble(),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          softWrap: false,
+          duration: const Duration(milliseconds: 500),
+          separator: ',',
+          style: Theme.of(context).textTheme.headline1?.copyWith(
+              fontFamily: 'BebasNeue',
+              // fontStyle: FontStyle.italic,
+              // fontWeight: FontWeight.bold,
+              color: Colors.white)),
+      SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+      const Text(
+        '/Available coin',
+        style: TextStyle(
+            color: Colors.white60, fontSize: 16, fontStyle: FontStyle.italic),
+      ),
+    ],
+  );
 }

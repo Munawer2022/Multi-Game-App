@@ -187,32 +187,8 @@ class _WheelGameState extends State<WheelGame> {
                     scale: 15,
                   ),
                   SizedBox(width: sized.size.width * 0.01),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Countup(
-                          begin: 0,
-                          end: 22.00,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          softWrap: false,
-                          duration: const Duration(milliseconds: 500),
-                          separator: ',',
-                          style: theme.textTheme.headline1?.copyWith(
-                              fontFamily: 'BebasNeue',
-                              // fontStyle: FontStyle.italic,
-                              // fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                      SizedBox(width: sized.size.width * 0.01),
-                      const Text(
-                        '/Available coin',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontStyle: FontStyle.italic),
-                      ),
-                    ],
-                  ),
+                  availableCoin(context, 12)
+                  //please add this end point coin api
                 ],
               ),
             ),

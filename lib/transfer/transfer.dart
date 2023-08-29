@@ -127,32 +127,7 @@ class _TransferScreenState extends State<TransferScreen> {
                     SizedBox(
                       width: 2,
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Countup(
-                            begin: 0,
-                            end: availableCoins.toDouble(),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            softWrap: false,
-                            duration: const Duration(milliseconds: 500),
-                            separator: ',',
-                            style: theme.textTheme.headline1?.copyWith(
-                                fontFamily: 'BebasNeue',
-                                // fontStyle: FontStyle.italic,
-                                // fontWeight: FontWeight.bold,
-                                color: Colors.black)),
-                        // SizedBox(width: sized.size.width * 0.01),
-                        const Text(
-                          '/Available coin',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontStyle: FontStyle.italic),
-                        ),
-                      ],
-                    ),
+                    availableCoin(context, availableCoins)
                   ],
                 ),
               ),
