@@ -316,8 +316,10 @@ Widget newContainer(BuildContext context, image) {
       } else {
         if (image == "assets/images/horse.jpg") {
           checkRace();
-        } else {
+        } else if (image == "assets/images/wheel.jpg") {
           AppNavigator().push(context, WheelGame());
+        } else {
+          AppNavigator().push(context, MainScreen());
         }
       }
     },
