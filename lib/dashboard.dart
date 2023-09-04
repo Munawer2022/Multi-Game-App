@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:animation/horse/horse_bid.dart';
 import 'package:animation/horse/horse_race.dart';
 import 'package:animation/navigate.dart';
+import 'package:animation/spinn_wheel/lucky_spinn_wheel.dart';
 import 'package:animation/spinn_wheel/spinn_wheel_bid.dart';
 import 'package:animation/spinn_wheel/wheel_game.dart';
 import 'package:animation/ticket_button/ticket_ui_screen.dart';
@@ -21,6 +22,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import 'auth/login/login.dart';
+import 'dice_game/dice_game_screen.dart';
 import 'ludo/main_screen.dart';
 
 class Dahboard extends StatefulWidget {
@@ -187,6 +189,7 @@ class _DahboardState extends State<Dahboard> {
                             newContainer(context, 'assets/images/wheel.jpg'),
                             newContainer(
                                 context, 'assets/images/ludo_slide_back.png'),
+                            newContainer(context, 'assets/images/dice_bac.jpg'),
                           ]),
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.center,
@@ -317,9 +320,11 @@ Widget newContainer(BuildContext context, image) {
         if (image == "assets/images/horse.jpg") {
           checkRace();
         } else if (image == "assets/images/wheel.jpg") {
-          AppNavigator().push(context, WheelGame());
-        } else {
+          AppNavigator().push(context, LuckySpinnWheel());
+        } else if (image == "assets/images/ludo_slide_back.png") {
           AppNavigator().push(context, MainScreen());
+        } else {
+          AppNavigator().push(context, DiceGameScreen());
         }
       }
     },

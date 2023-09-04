@@ -84,7 +84,7 @@ class _MyAppState extends State<MyApp> {
           //   Theme.of(context).textTheme,
           // ),
         ),
-        home: LuckySpinnWheel()
+        home: Dahboard()
         //  HorseRaceScreen(
         //   winnerHorse: '7',
         // )
