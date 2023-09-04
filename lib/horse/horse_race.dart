@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -13,6 +14,19 @@ class HorseRaceScreen extends StatefulWidget {
   @override
   _HorseRaceScreenState createState() => _HorseRaceScreenState();
 }
+
+final mywidgetkey = GlobalKey();
+final key1 = GlobalKey(),
+    key2 = GlobalKey(),
+    key3 = GlobalKey(),
+    key4 = GlobalKey(),
+    key5 = GlobalKey(),
+    key6 = GlobalKey(),
+    key7 = GlobalKey(),
+    key8 = GlobalKey(),
+    key9 = GlobalKey();
+Timer? timer;
+double? height;
 
 class _HorseRaceScreenState extends State<HorseRaceScreen>
     with SingleTickerProviderStateMixin {
@@ -47,7 +61,7 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
     ]);
 
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 18));
+        AnimationController(vsync: this, duration: const Duration(seconds: 30));
 
     _animationController.addListener(() {
       setState(() {
@@ -72,6 +86,20 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
     Future.delayed(Duration(seconds: 2), () {
       _startRace();
     });
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => checkPosition());
+  }
+
+  void checkPosition() {
+    RenderBox renderbox =
+        mywidgetkey.currentContext!.findRenderObject() as RenderBox;
+    Offset position = renderbox.localToGlobal(Offset.zero);
+    double x = position.dx;
+    double y = position.dy;
+    print(height);
+    print("position" + x.toString());
+    if (x >= height! - 100) {
+      print("matched");
+    }
   }
 
   void _startRace() {
@@ -79,62 +107,59 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
       setState(() {
         if (widget.winnerHorse == "1") {
           print("Winner is 1");
-          random1 = Random().nextInt(610) + 600;
+          random1 = Random().nextInt(801) + 800;
           ;
         } else {
           random1 = Random().nextInt(500) + 300;
         }
         if (widget.winnerHorse == "2") {
           print("Winner is 2");
-          random2 = Random().nextInt(610) + 600;
-          ;
+          random2 = Random().nextInt(801) + 800;
         } else {
           random2 = Random().nextInt(500) + 300;
         }
         if (widget.winnerHorse == "3") {
           print("Winner is 3");
-          random3 = Random().nextInt(610) + 600;
+          random3 = Random().nextInt(801) + 800;
         } else {
           random3 = Random().nextInt(500) + 300;
         }
         if (widget.winnerHorse == "4") {
           print("Winner is 4");
-          random4 = Random().nextInt(610) + 600;
-          ;
+          random4 = Random().nextInt(801) + 800;
         } else {
           random4 = Random().nextInt(500) + 300;
         }
         if (widget.winnerHorse == "5") {
           print("Winner is 5");
-          random5 = Random().nextInt(610) + 600;
-          ;
+          random5 = Random().nextInt(801) + 800;
+          print(random5);
         } else {
           random5 = Random().nextInt(500) + 300;
         }
         if (widget.winnerHorse == "6") {
           print("Winner is 6");
-          random6 = Random().nextInt(610) + 600;
-          ;
+          random6 = Random().nextInt(801) + 800;
         } else {
           random6 = Random().nextInt(500) + 300;
         }
         if (widget.winnerHorse == "7") {
           print("Winner is 7");
-          random7 = Random().nextInt(610) + 600;
+          random7 = Random().nextInt(801) + 800;
           ;
         } else {
           random7 = Random().nextInt(500) + 300;
         }
         if (widget.winnerHorse == "8") {
           print("Winner is 8");
-          random8 = Random().nextInt(610) + 600;
+          random8 = Random().nextInt(801) + 800;
           ;
         } else {
           random8 = Random().nextInt(500) + 300;
         }
         if (widget.winnerHorse == "9") {
           print("Winner is 9");
-          random9 = Random().nextInt(610) + 600;
+          random9 = Random().nextInt(801) + 800;
         } else {
           random9 = Random().nextInt(500) + 300;
         }
@@ -179,6 +204,7 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
 
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -193,6 +219,7 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
               horse7Position: horse7Position,
               horse8Position: horse8Position,
               horse9Position: horse9Position,
+              winnerHorse: widget.winnerHorse,
             ),
             // Center(
             //   child: ElevatedButton(
@@ -223,6 +250,7 @@ class RaceTrack extends StatelessWidget {
   final double horse7Position;
   final double horse8Position;
   final double horse9Position;
+  final String winnerHorse;
 
   RaceTrack(
       {required this.horse1Position,
@@ -233,7 +261,8 @@ class RaceTrack extends StatelessWidget {
       required this.horse6Position,
       required this.horse7Position,
       required this.horse8Position,
-      required this.horse9Position});
+      required this.horse9Position,
+      required this.winnerHorse});
 
   @override
   Widget build(BuildContext context) {
@@ -245,15 +274,15 @@ class RaceTrack extends StatelessWidget {
           width: double.infinity,
           fit: BoxFit.fill,
         ),
-        position(horse1Position, 5, '1'),
-        position(horse2Position, 20, '2'),
-        position(horse3Position, 50, '3'),
-        position(horse4Position, 80, '4'),
-        position(horse5Position, 120, '5'),
-        position(horse6Position, 150, '6'),
-        position(horse7Position, 180, '7'),
-        position(horse8Position, 210, '8'),
-        position(horse9Position, 240, '9'),
+        position(horse1Position, 5, '1', mywidgetkey, key1, winnerHorse),
+        position(horse2Position, 20, '2', mywidgetkey, key2, winnerHorse),
+        position(horse3Position, 50, '3', mywidgetkey, key3, winnerHorse),
+        position(horse4Position, 80, '4', mywidgetkey, key4, winnerHorse),
+        position(horse5Position, 150, '5', mywidgetkey, key5, winnerHorse),
+        position(horse6Position, 150, '6', mywidgetkey, key6, winnerHorse),
+        position(horse7Position, 180, '7', mywidgetkey, key7, winnerHorse),
+        position(horse8Position, 210, '8', mywidgetkey, key8, winnerHorse),
+        position(horse9Position, 240, '9', mywidgetkey, key9, winnerHorse),
       ],
     );
   }
@@ -272,8 +301,10 @@ class Horse extends StatelessWidget {
   }
 }
 
-Widget position(horse3Position, double top, text) {
+Widget position(horse3Position, double top, text, GlobalKey mywidgetkey,
+    GlobalKey keyX, String winnerHorse) {
   return Positioned(
+    key: text == winnerHorse ? mywidgetkey : keyX,
     top: top,
     left: horse3Position,
     child: Column(

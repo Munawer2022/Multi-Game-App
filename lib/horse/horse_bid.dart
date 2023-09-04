@@ -94,8 +94,16 @@ class _HorseBidState extends State<HorseBid> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var sized = MediaQuery.of(context);
+    List<String> bid = [
+      "2x bet",
+      "3x bet",
+    ];
 
     List<String> options = [
+      "50",
+      "100",
+      "250",
+      "500",
       "500",
       "1000",
       "1500",
@@ -326,6 +334,45 @@ class _HorseBidState extends State<HorseBid> {
                                   },
                                 ));
                           })),
+                  SizedBox(height: sized.size.height * 0.02),
+                  SizedBox(
+                      width: double.infinity,
+                      height: sized.size.height * 0.05,
+                      //40,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: bid.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: ChoiceChip(
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.horizontal(
+                                          left: Radius.circular(20),
+                                          right: Radius.circular(20))),
+                                  label: Row(
+                                    children: [
+                                      // Icon(Icons.one_x_mobiledata),
+                                      // SizedBox(width: sized.size.width * 0.01),
+                                      Text(bid[index],
+                                          style: theme.textTheme.subtitle2
+                                              ?.copyWith(
+                                            fontStyle: FontStyle.italic,
+                                          )),
+                                    ],
+                                  ),
+                                  selected: value.value3 == index,
+                                  onSelected: (bool selected) {
+                                    value.changeTabIndex3(index);
+                                    // selectedAmount = options[index].toString();
+                                    // bidText = "Your bid";
+                                    setState(() {});
+                                    // selectedDate = date[value.value].toString();
+                                  },
+                                ));
+                          })),
+
                   SizedBox(height: sized.size.height * 0.04),
                   // Padding(
                   //   padding: bidHorsePadding,
@@ -430,6 +477,16 @@ class HorseBidController extends ChangeNotifier {
     dynamic index,
   ) {
     _value2 = index;
+    notifyListeners();
+  }
+
+  int _value3 = 0;
+  int get value3 => _value3;
+
+  changeTabIndex3(
+    dynamic index,
+  ) {
+    _value3 = index;
     notifyListeners();
   }
 }

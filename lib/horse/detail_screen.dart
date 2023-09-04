@@ -102,7 +102,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('You Won',
+                            Text('Winner Horse Number',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                                 softWrap: false,

@@ -89,6 +89,7 @@ class _UserState extends State<User> {
     var theme = Theme.of(context);
     var sized = MediaQuery.of(context);
     return Scaffold(
+        // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.blueAccent.shade100.withOpacity(.3),
         appBar: AppBar(
           automaticallyImplyLeading: false,
