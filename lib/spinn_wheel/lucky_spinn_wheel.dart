@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:neopop/widgets/shimmer/neopop_shimmer.dart';
 import 'package:rxdart/rxdart.dart';
@@ -97,6 +100,34 @@ class _LuckySpinnWheelState extends State<LuckySpinnWheel> {
     );
   }
 
+////api
+  final box = GetStorage();
+  int availableCoins = 0;
+  void checkBalance() async {
+    String date = DateTime.now().toString();
+    var url = Uri.parse(
+        "https://cybermaxuk.com/gamezone/game_backend/public/api/check-user-balance?userId=" +
+            box.read('id').toString());
+
+    var response = await http.get(url, headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.acceptHeader: "application/json",
+    });
+    var responseData = json.decode(response.body);
+    print(responseData['coin_balance']);
+    String responseCoins = responseData['coin_balance'].toString();
+    availableCoins =
+        int.parse(responseCoins.substring(0, responseCoins.length - 3));
+    setState(() {});
+  }
+
+  @override
+  initState() {
+    super.initState();
+
+    checkBalance();
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -143,7 +174,7 @@ class _LuckySpinnWheelState extends State<LuckySpinnWheel> {
                         scale: 15,
                       ),
                       SizedBox(width: sized.size.width * 0.01),
-                      availableCoin(context, 12)
+                      availableCoin(context, availableCoins)
                       //please add this end point coin api
                     ],
                   ),
@@ -270,7 +301,7 @@ class _LuckySpinnWheelState extends State<LuckySpinnWheel> {
                       scale: 20,
                     ),
                     Text(
-                      '100',
+                      '25',
                       style: Theme.of(context).textTheme.headline5?.copyWith(
                           color: const Color(0xffFFF893),
                           fontWeight: FontWeight.w900,
@@ -327,20 +358,20 @@ class RouletteScore extends StatelessWidget {
 }
 
 final Map<int, String> labels = {
-  1: '1000\$',
-  2: '200\$',
-  3: '300\$',
-  4: '400\$',
-  5: '500\$',
-  6: '600\$',
-  7: '700\$',
-  8: '800\$',
-  9: '900\$',
-  10: '100\$',
-  11: '1000\$',
-  12: '200\$',
-  13: '300\$',
-  14: '400\$',
-  15: '500\$',
-  16: '600\$',
+  1: 'Loss',
+  2: '10',
+  3: 'Loss',
+  4: '2x',
+  5: 'Loss',
+  6: '5',
+  7: 'Loss',
+  8: '10',
+  9: 'Loss',
+  10: '5',
+  11: 'Loss',
+  12: '2x',
+  13: 'Loss',
+  14: '10',
+  15: 'Loss',
+  16: '5',
 };
