@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:animation/user.dart';
 import 'package:animation/utils.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../dashboard.dart';
 import '../ludo/ludo_provider.dart';
 import '../ludo/widgets/dice_widget.dart';
+import 'dice_game.dart';
 
 class DiceGameScreen extends StatefulWidget {
   const DiceGameScreen({super.key});
@@ -47,6 +49,41 @@ class _DiceGameScreenState extends State<DiceGameScreen> {
     checkBalance();
   }
 
+  ///dice game
+  final diceList = const [
+    'assets/images/dice/1.png',
+    'assets/images/dice/2.png',
+    'assets/images/dice/3.png',
+    'assets/images/dice/4.png',
+    'assets/images/dice/5.png',
+    'assets/images/dice/6.png',
+    // 'pictures/d1.jpg',
+    // 'pictures/d2.jpg',
+    // 'pictures/d3.png',
+    // 'pictures/d4.png',
+    // 'pictures/d5.jpg',
+    // 'pictures/d6.png',
+  ];
+  final random = Random.secure();
+  var index1 = 0;
+  var index2 = 0;
+  var score = 0;
+  var diceSum = 0;
+  var isOver = false;
+  _rollTheDice() {
+    // (setState).nextint;
+    setState(() {
+      index1 = random.nextInt(6);
+      index2 = random.nextInt(6);
+      diceSum = index1 + index2 + 2;
+      if (diceSum == 7) {
+        isOver = true;
+      } else {
+        score += index1 + index2 + 2;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -79,44 +116,60 @@ class _DiceGameScreenState extends State<DiceGameScreen> {
           ),
           Center(
               child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                      Image.asset(
-                        'assets/images/coin.png',
-                        scale: 15,
-                      ),
-                      SizedBox(width: sized.size.width * 0.01),
-                      availableCoin(context, availableCoins)
-                    ])),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 100, height: 100, child: DiceWidget()),
-                    SizedBox(width: 10),
-                    SizedBox(width: 100, height: 100, child: DiceWidget()),
-                  ],
-                ),
-                SizedBox(height: 40),
-                Consumer<LudoProvider>(
-                    builder: (context, value, child) => Column(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                              Image.asset(
+                                'assets/images/coin.png',
+                                scale: 15,
+                              ),
+                              SizedBox(width: sized.size.width * 0.01),
+                              availableCoin(context, availableCoins)
+                            ])),
+                        Text(
+                          'Score:$score',
+                          style: TextStyle(fontSize: 40),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Button(
-                              title: '7 up',
-                              onTap: value.throwDice,
+                            Image.asset(
+                              diceList[index1],
+                              width: 100,
+                              height: 100,
                             ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Image.asset(
+                              diceList[index2],
+                              width: 100,
+                              height: 100,
+                            ),
+                            // SizedBox(width: 100, height: 100, child: DiceWidget()),
+                            // SizedBox(width: 10),
+                            // SizedBox(width: 100, height: 100, child: DiceWidget()),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Dice Sum:$diceSum',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 40),
+                        Column(
+                          children: [
+                            Button(title: '7 up', onTap: _rollTheDice),
                             SizedBox(height: 20),
-                            Button(
-                              title: '7 down',
-                              onTap: value.throwDice,
-                            ),
+                            Button(title: '7 down', onTap: _rollTheDice),
                             SizedBox(
                               height: sized.size.height * .01,
                             ),
@@ -149,10 +202,8 @@ class _DiceGameScreenState extends State<DiceGameScreen> {
                               ],
                             ),
                           ],
-                        )),
-              ],
-            ),
-          ))
+                        ),
+                      ])))
         ],
       ),
     );
