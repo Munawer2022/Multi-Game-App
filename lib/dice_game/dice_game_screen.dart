@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import '../dashboard.dart';
+import '../ludo/ludo_provider.dart';
 import '../ludo/widgets/dice_widget.dart';
 
 class DiceGameScreen extends StatefulWidget {
@@ -102,44 +105,51 @@ class _DiceGameScreenState extends State<DiceGameScreen> {
                   ],
                 ),
                 SizedBox(height: 40),
-                Column(
-                  children: [
-                    Button(title: '7 up', onTap: () {}),
-                    SizedBox(height: 20),
-                    Button(title: '7 down', onTap: () {}),
-                    SizedBox(
-                      height: sized.size.height * .01,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'One spin in just ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              ?.copyWith(
-                                  color: const Color(0xffFFF893),
-                                  fontStyle: FontStyle.italic),
-                        ),
-                        Image.asset(
-                          'assets/images/coin.png',
-                          scale: 20,
-                        ),
-                        Text(
-                          '25',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              ?.copyWith(
-                                  color: const Color(0xffFFF893),
-                                  fontWeight: FontWeight.w900,
-                                  fontStyle: FontStyle.italic),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                Consumer<LudoProvider>(
+                    builder: (context, value, child) => Column(
+                          children: [
+                            Button(
+                              title: '7 up',
+                              onTap: value.throwDice,
+                            ),
+                            SizedBox(height: 20),
+                            Button(
+                              title: '7 down',
+                              onTap: value.throwDice,
+                            ),
+                            SizedBox(
+                              height: sized.size.height * .01,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'One spin in just ',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5
+                                      ?.copyWith(
+                                          color: const Color(0xffFFF893),
+                                          fontStyle: FontStyle.italic),
+                                ),
+                                Image.asset(
+                                  'assets/images/coin.png',
+                                  scale: 20,
+                                ),
+                                Text(
+                                  '25',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5
+                                      ?.copyWith(
+                                          color: const Color(0xffFFF893),
+                                          fontWeight: FontWeight.w900,
+                                          fontStyle: FontStyle.italic),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
               ],
             ),
           ))
