@@ -133,36 +133,44 @@ class _DiceGameScreenState extends State<DiceGameScreen> {
                               SizedBox(width: sized.size.width * 0.01),
                               availableCoin(context, availableCoins)
                             ])),
-                        Text(
-                          'Score:$score',
-                          style: TextStyle(fontSize: 40),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Column(
                           children: [
-                            Image.asset(
-                              diceList[index1],
-                              width: 100,
-                              height: 100,
+                            Text(
+                              'Score:$score',
+                              style:
+                                  TextStyle(fontSize: 40, color: Colors.white),
                             ),
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  diceList[index1],
+                                  width: 100,
+                                  height: 100,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Image.asset(
+                                  diceList[index2],
+                                  width: 100,
+                                  height: 100,
+                                ),
+                                // SizedBox(width: 100, height: 100, child: DiceWidget()),
+                                // SizedBox(width: 10),
+                                // SizedBox(width: 100, height: 100, child: DiceWidget()),
+                              ],
                             ),
-                            Image.asset(
-                              diceList[index2],
-                              width: 100,
-                              height: 100,
+                            SizedBox(height: 30),
+                            Text(
+                              'Dice Sum:$diceSum',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
-                            // SizedBox(width: 100, height: 100, child: DiceWidget()),
-                            // SizedBox(width: 10),
-                            // SizedBox(width: 100, height: 100, child: DiceWidget()),
                           ],
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          'Dice Sum:$diceSum',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 40),
                         Column(
