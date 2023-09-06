@@ -284,6 +284,7 @@ class _DahboardState extends State<Dahboard> {
 Widget newContainer(BuildContext context, image) {
   void checkRace() async {
     String date = DateTime.now().toString();
+    print(date);
     var url = Uri.parse(
         "https://cybermaxuk.com/gamezone/game_backend/public/api/check-race?datetime=$date");
 
@@ -300,7 +301,8 @@ Widget newContainer(BuildContext context, image) {
     print(ampm);
     if (responseData["message"] ==
         "No race available on the specified time within the next 5 minutes.") {
-      AppNavigator().push(context, HorseBid(hour: hour, ampm: ampm));
+      AppNavigator().push(context,
+          HorseBid(hour: hour, ampm: ampm, raceId: responseData["id"]));
     } else if (responseData["message"] ==
         "Race is available on the specified time.") {
       print(responseData['winner_horse_no']);

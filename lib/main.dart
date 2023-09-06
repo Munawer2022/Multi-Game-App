@@ -23,6 +23,7 @@ import 'horse/horse_race.dart';
 import 'ludo/ludo_provider.dart';
 
 void main() {
+  
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(

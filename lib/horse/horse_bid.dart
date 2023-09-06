@@ -15,8 +15,12 @@ import 'package:http/http.dart' as http;
 import '../navigate.dart';
 
 class HorseBid extends StatefulWidget {
-  String hour, ampm;
-  HorseBid({required this.hour, required this.ampm, super.key});
+  String hour, ampm, raceId;
+  HorseBid(
+      {required this.hour,
+      required this.ampm,
+      required this.raceId,
+      super.key});
 
   @override
   State<HorseBid> createState() => _HorseBidState();
@@ -44,6 +48,31 @@ class _HorseBidState extends State<HorseBid> {
     String responseCoins = responseData['coin_balance'].toString();
     availableCoins =
         int.parse(responseCoins.substring(0, responseCoins.length - 3));
+  }
+
+  void storeBid() async {
+    var url = Uri.parse(
+        "https://cybermaxuk.com/gamezone/game_backend/public/api/bids");
+
+    var response = await http.post(url,
+        body: jsonEncode({
+          'horse_no': selectedHorse,
+          'user_id': box.read('id'),
+          'amount': selectedAmount.toString(),
+          'race_id': widget.raceId,
+        }),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.acceptHeader: "application/json"
+        });
+    print(json.decode(response.body));
+    if (response.statusCode == 200) {
+      var responseData = json.decode(response.body);
+      snackbar("Your bid initiated", context);
+    }
+
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => dashboard(id: 1)));
   }
 
   @override
@@ -88,7 +117,7 @@ class _HorseBidState extends State<HorseBid> {
   }
 
   String bidText = "Minimum Bid";
-  String selectedAmount = "500", selectedHorse = "1";
+  String selectedAmount = "50", selectedHorse = "1";
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +266,7 @@ class _HorseBidState extends State<HorseBid> {
                               scale: 22,
                             ),
                             SizedBox(width: sized.size.width * 0.01),
-                            Text(options[value._value],
+                            Text(selectedAmount.toString(),
                                 style: theme.textTheme.headline4?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color:
@@ -335,45 +364,103 @@ class _HorseBidState extends State<HorseBid> {
                                 ));
                           })),
                   SizedBox(height: sized.size.height * 0.02),
-                  SizedBox(
-                      width: double.infinity,
-                      height: sized.size.height * 0.05,
-                      //40,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: bid.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: ChoiceChip(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.horizontal(
-                                          left: Radius.circular(20),
-                                          right: Radius.circular(20))),
-                                  label: Row(
-                                    children: [
-                                      // Icon(Icons.one_x_mobiledata),
-                                      // SizedBox(width: sized.size.width * 0.01),
-                                      Text(bid[index],
-                                          style: theme.textTheme.subtitle2
-                                              ?.copyWith(
-                                            fontStyle: FontStyle.italic,
-                                          )),
-                                    ],
-                                  ),
-                                  selected: value.value3 == index,
-                                  onSelected: (bool selected) {
-                                    value.changeTabIndex3(index);
-                                    // selectedAmount = options[index].toString();
-                                    // bidText = "Your bid";
-                                    setState(() {});
-                                    // selectedDate = date[value.value].toString();
-                                  },
-                                ));
-                          })),
+                  // SizedBox(
+                  //     width: double.infinity,
+                  //     height: sized.size.height * 0.05,
+                  //     //40,
+                  //     child: ListView.builder(
+                  //         scrollDirection: Axis.horizontal,
+                  //         itemCount: bid.length,
+                  //         itemBuilder: (context, index) {
+                  //           return Padding(
+                  //               padding:
+                  //                   const EdgeInsets.symmetric(horizontal: 10),
+                  //               child: ChoiceChip(
+                  //                 shape: const RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.horizontal(
+                  //                         left: Radius.circular(20),
+                  //                         right: Radius.circular(20))),
+                  //                 label: Row(
+                  //                   children: [
+                  //                     // Icon(Icons.one_x_mobiledata),
+                  //                     // SizedBox(width: sized.size.width * 0.01),
+                  //                     Text(bid[index],
+                  //                         style: theme.textTheme.subtitle2
+                  //                             ?.copyWith(
+                  //                           fontStyle: FontStyle.italic,
+                  //                         )),
+                  //                   ],
+                  //                 ),
+                  //                 selected: value.value3 == index,
+                  //                 onSelected: (bool selected) {
+                  //                   value.changeTabIndex3(index);
+                  //                   // selectedAmount = options[index].toString();
+                  //                   // bidText = "Your bid";
+                  //                   setState(() {});
+                  //                   // selectedDate = date[value.value].toString();
+                  //                 },
+                  //               ));
+                  //         })),
 
                   SizedBox(height: sized.size.height * 0.04),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: MaterialButton(
+                            minWidth: double.infinity,
+                            height: 35,
+                            color: Color(0xFF8CD14E),
+                            disabledColor: Colors.grey,
+                            onPressed: () {
+                              selectedAmount =
+                                  (int.parse(selectedAmount) * 2).toString();
+
+                              setState(() {});
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: const Text(
+                              "2X",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: MaterialButton(
+                            minWidth: double.infinity,
+                            height: 35,
+                            color: Color(0xFF8CD14E),
+                            disabledColor: Colors.grey,
+                            onPressed: () {
+                              selectedAmount =
+                                  (int.parse(selectedAmount) * 3).toString();
+
+                              setState(() {});
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: const Text(
+                              "3X",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                   // Padding(
                   //   padding: bidHorsePadding,
                   //   child: TicketWidget(
@@ -429,10 +516,10 @@ class _HorseBidState extends State<HorseBid> {
                               errorsnackBar(
                                   "You have insufficient coins", context);
                             } else {
-                              box.write('myHorse', selectedHorse);
-                              box.write('myAmount', selectedAmount);
-                              box.write('myHour', widget.hour);
-                              snackbar("Your bid initiated", context);
+                              // box.write('myHorse', selectedHorse);
+                              // box.write('myAmount', selectedAmount);
+                              // box.write('myHour', widget.hour);
+                              storeBid();
                             }
                           },
                           child: Center(

@@ -22,6 +22,8 @@ class DiceGameScreen extends StatefulWidget {
 }
 
 class _DiceGameScreenState extends State<DiceGameScreen> {
+  bool isStartRole = false;
+
   final box = GetStorage();
   int availableCoins = 0;
   void checkBalance() async {
@@ -71,16 +73,21 @@ class _DiceGameScreenState extends State<DiceGameScreen> {
   var diceSum = 0;
   var isOver = false;
   _rollTheDice() {
+    isStartRole = true;
+    setState(() {});
     // (setState).nextint;
-    setState(() {
-      index1 = random.nextInt(6);
-      index2 = random.nextInt(6);
-      diceSum = index1 + index2 + 2;
-      if (diceSum == 7) {
-        isOver = true;
-      } else {
-        score += index1 + index2 + 2;
-      }
+    Future.delayed(const Duration(seconds: 5), () {
+      isStartRole = false;
+      setState(() {
+        index1 = random.nextInt(6);
+        index2 = random.nextInt(6);
+        diceSum = index1 + index2 + 2;
+        if (diceSum == 7) {
+          isOver = true;
+        } else {
+          score += index1 + index2 + 2;
+        }
+      });
     });
   }
 
@@ -145,7 +152,9 @@ class _DiceGameScreenState extends State<DiceGameScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  diceList[index1],
+                                  isStartRole
+                                      ? "assets/images/dice/draw.gif"
+                                      : diceList[index1],
                                   width: 100,
                                   height: 100,
                                 ),
@@ -153,7 +162,9 @@ class _DiceGameScreenState extends State<DiceGameScreen> {
                                   width: 10,
                                 ),
                                 Image.asset(
-                                  diceList[index2],
+                                  isStartRole
+                                      ? "assets/images/dice/draw.gif"
+                                      : diceList[index2],
                                   width: 100,
                                   height: 100,
                                 ),
