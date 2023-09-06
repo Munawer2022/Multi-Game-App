@@ -15,11 +15,12 @@ import 'package:http/http.dart' as http;
 import '../navigate.dart';
 
 class HorseBid extends StatefulWidget {
-  String hour, ampm, raceId;
+  String hour, ampm, raceId, time;
   HorseBid(
       {required this.hour,
       required this.ampm,
       required this.raceId,
+      required this.time,
       super.key});
 
   @override
@@ -235,7 +236,7 @@ class _HorseBidState extends State<HorseBid> {
                         //     style: theme.textTheme.displayLarge?.copyWith(
                         //         fontWeight: FontWeight.bold,
                         //         color: Colors.white)),
-                        Text(widget.hour + ":00 " + widget.ampm,
+                        Text(widget.time,
                             style: theme.textTheme.displayLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white)),

@@ -301,8 +301,13 @@ Widget newContainer(BuildContext context, image) {
     print(ampm);
     if (responseData["message"] ==
         "No race available on the specified time within the next 5 minutes. Here is the next upcoming race.") {
-      AppNavigator().push(context,
-          HorseBid(hour: hour, ampm: ampm, raceId: responseData["id"].toString()));
+      AppNavigator().push(
+          context,
+          HorseBid(
+              hour: hour,
+              ampm: ampm,
+              raceId: responseData["id"].toString(),
+              time: responseData["time"].toString()));
     } else if (responseData["message"] ==
         "Race is available on the specified time.") {
       print(responseData['winner_horse_no']);
