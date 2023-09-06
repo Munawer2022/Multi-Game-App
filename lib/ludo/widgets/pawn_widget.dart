@@ -1,3 +1,4 @@
+import 'package:animation/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -52,7 +53,9 @@ class PawnWidget extends StatelessWidget {
               onTap: () {
                 if (step == -1) {
                   provider.move(type, index, (step + 1) + 1);
+                  snackbar("step 1", context);
                 } else {
+                  snackbar(provider.diceResult.toString(), context);
                   provider.move(type, index, (step + 1) + provider.diceResult);
                 }
                 context.read<LudoProvider>().move(type, index, step);

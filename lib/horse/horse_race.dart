@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../navigate.dart';
 import 'detail_screen.dart';
+import 'package:http/http.dart' as http;
 
 class HorseRaceScreen extends StatefulWidget {
   String winnerHorse;
@@ -52,6 +56,8 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
   late int random8;
   late int random9;
 
+  final box = GetStorage();
+
   @override
   void initState() {
     super.initState();
@@ -87,6 +93,47 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
       _startRace();
     });
     timer = Timer.periodic(Duration(seconds: 1), (Timer t) => checkPosition());
+
+    winOrLoss();
+  }
+
+  void winOrLoss() {
+    print(widget.winnerHorse);
+    print(box.read('hourseNo'));
+    if (box.read('hourseNo').toString() != "0") {
+      if (widget.winnerHorse == box.read('hourseNo').toString()) {
+        transfer('8jR0XG', box.read('code'), '3', box.read('biddingAmount'));
+      } else {
+        transfer(box.read('code'), '8jR0XG', '2', box.read('biddingAmount'));
+      }
+    } else {
+      print("no bid");
+    }
+  }
+
+  void transfer(String from, String to, String type, String coins) async {
+    var url = Uri.parse(
+        "https://cybermaxuk.com/gamezone/game_backend/public/api/available_coins");
+
+    var response = await http.post(url,
+        body: jsonEncode({
+          'from_user_code': from.toString(),
+          'to_user_code': to.toString(),
+          'coin_type': type,
+          'coins': coins.toString(),
+        }),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.acceptHeader: "application/json"
+        });
+    // print(json.decode(response.body));
+    // if (response.statusCode == 200) {
+    //   var responseData = json.decode(response.body);
+
+    // }
+
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => dashboard(id: 1)));
   }
 
   void checkPosition() {
@@ -99,6 +146,9 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
     print("position" + x.toString());
     if (x >= height! - 100) {
       print("matched");
+      timer?.cancel;
+      AppNavigator()
+          .push(context, DetailScreen(winnerHorse: widget.winnerHorse));
     }
   }
 

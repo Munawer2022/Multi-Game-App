@@ -35,6 +35,9 @@ class RegisterProvider extends ChangeNotifier {
         box.write('mobile_no', value['mobile_no']);
         box.write('id', value['id']);
         box.write('name', value['name']);
+        box.write('hourseNo', "0");
+        box.write('biddingAmount', "0");
+        box.write('bidInitiated', false);
         AppNavigator().push(context, const Dahboard());
       }
     }).onError((error, stackTrace) {
