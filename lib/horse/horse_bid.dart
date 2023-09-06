@@ -71,6 +71,7 @@ class _HorseBidState extends State<HorseBid> {
     //   var responseData = json.decode(response.body);
 
     // }
+    transfer(box.read('code'), '8jR0XG', '5', selectedAmount.toString());
     box.write('hourseNo', selectedHorse);
     box.write('biddingAmount', selectedAmount);
     box.write('bidInitiated', true);
@@ -78,6 +79,31 @@ class _HorseBidState extends State<HorseBid> {
     isBidInitiated = true;
 
     setState(() {});
+
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => dashboard(id: 1)));
+  }
+
+  void transfer(String from, String to, String type, String coins) async {
+    var url = Uri.parse(
+        "https://cybermaxuk.com/gamezone/game_backend/public/api/available_coins");
+
+    var response = await http.post(url,
+        body: jsonEncode({
+          'from_user_code': from.toString(),
+          'to_user_code': to.toString(),
+          'coin_type': type,
+          'coins': coins.toString(),
+        }),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.acceptHeader: "application/json"
+        });
+    // print(json.decode(response.body));
+    // if (response.statusCode == 200) {
+    //   var responseData = json.decode(response.body);
+
+    // }
 
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => dashboard(id: 1)));

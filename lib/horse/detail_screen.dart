@@ -24,6 +24,10 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   initState() {
     super.initState();
+    box.write('hourseNo', "0");
+    box.write('biddingAmount', "0");
+    box.write('bidInitiated', false);
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
@@ -59,7 +63,9 @@ class _DetailScreenState extends State<DetailScreen> {
             SliverAppBar(
               leading: IconButton(
                   onPressed: () {
-                    AppNavigator().push(context, const Dahboard());
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => Dahboard()),
+                        (Route<dynamic> route) => false);
                   },
                   icon: const Icon(
                     CupertinoIcons.back,
@@ -242,6 +248,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               theme.primaryColor.withOpacity(0.7))),
                       onPressed: () {
                         // AppNavigator().push(context, const HorseBid());
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => Dahboard()),
+                            (Route<dynamic> route) => false);
                       },
                       label: Text(
                         'Again ?',

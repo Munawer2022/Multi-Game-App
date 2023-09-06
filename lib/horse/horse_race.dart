@@ -102,7 +102,8 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
     print(box.read('hourseNo'));
     if (box.read('hourseNo').toString() != "0") {
       if (widget.winnerHorse == box.read('hourseNo').toString()) {
-        transfer('8jR0XG', box.read('code'), '3', box.read('biddingAmount'));
+        int cal = int.parse(box.read('biddingAmount')) * 2;
+        transfer('8jR0XG', box.read('code'), '3', cal.toString());
       } else {
         transfer(box.read('code'), '8jR0XG', '2', box.read('biddingAmount'));
       }
@@ -147,8 +148,13 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
     if (x >= height! - 100) {
       print("matched");
       timer?.cancel;
-      AppNavigator()
-          .push(context, DetailScreen(winnerHorse: widget.winnerHorse));
+      // AppNavigator()
+      //     .push(context, DetailScreen(winnerHorse: widget.winnerHorse));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) =>
+                  DetailScreen(winnerHorse: widget.winnerHorse)),
+          (Route<dynamic> route) => false);
     }
   }
 
@@ -243,6 +249,7 @@ class _HorseRaceScreenState extends State<HorseRaceScreen>
   @override
   void dispose() {
     _animationController.dispose();
+    timer?.cancel();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
