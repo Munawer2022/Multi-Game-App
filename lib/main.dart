@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 import 'auth/login/provider.dart';
 
 import 'dashboard.dart';
-import 'dice_game/dice_game.dart';
+
 import 'dice_game/dice_game_screen.dart';
 import 'dog_race/dog_race_bid.dart';
 import 'horse/detail_screen.dart';
@@ -88,7 +88,7 @@ class _MyAppState extends State<MyApp> {
           // ),
         ),
         home: Dahboard()
-        //  HorseRaceScreen(
+        //     HorseRaceScreen(
         //   winnerHorse: '7',
         // )
         );

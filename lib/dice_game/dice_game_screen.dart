@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import '../dashboard.dart';
 import '../ludo/ludo_provider.dart';
 import '../ludo/widgets/dice_widget.dart';
-import 'dice_game.dart';
 
 class DiceGameScreen extends StatefulWidget {
   const DiceGameScreen({super.key});
