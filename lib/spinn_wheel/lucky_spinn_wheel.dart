@@ -134,204 +134,220 @@ class _LuckySpinnWheelState extends State<LuckySpinnWheel> {
     var sized = MediaQuery.of(context);
     return SafeArea(
       child: Scaffold(
-          body: Stack(children: [
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.red.shade200,
-                Colors.transparent,
-                // Colors.transparent,
-                // Colors.black
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0, 0.5],
+        body: Stack(
+          children: [
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              foregroundDecoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.red.shade200,
+                    Colors.transparent,
+                    // Colors.transparent,
+                    // Colors.black
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0, 0.5],
+                ),
+              ),
+              child: Image.asset(
+                'assets/images/wheel_back.jpg',
+                height: 1200,
+                width: 1200,
+                fit: BoxFit.cover,
+                opacity: const AlwaysStoppedAnimation(.7),
+              ),
             ),
-          ),
-          child: Image.asset(
-            'assets/images/wheel_back.jpg',
-            height: 1200,
-            width: 1200,
-            fit: BoxFit.cover,
-            opacity: const AlwaysStoppedAnimation(.7),
-          ),
-        ),
-        SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/coin.png',
-                        scale: 15,
+            SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/coin.png',
+                            scale: 15,
+                          ),
+                          SizedBox(width: sized.size.width * 0.01),
+                          availableCoin(context, availableCoins)
+                          //please add this end point coin api
+                        ],
                       ),
-                      SizedBox(width: sized.size.width * 0.01),
-                      availableCoin(context, availableCoins)
-                      //please add this end point coin api
-                    ],
-                  ),
-                ),
-                SizedBox(height: sized.size.height * 0.03),
-                Text(
-                  'Lucky Spinn',
-                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontStyle: FontStyle.italic,
-                      color: const Color(0xffFFF893),
-                      fontWeight: FontWeight.w900),
-                ),
-                Center(
-                  child: Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          'assets/images/wheel_back_light.png',
-                          height: 450,
-                          width: 450,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Center(
-                        child: Stack(
-                          alignment: AlignmentDirectional.center,
-                          children: [
-                            Column(
+                    ),
+                    SizedBox(height: sized.size.height * 0.03),
+                    Text(
+                      'Lucky Spinn',
+                      style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                          fontStyle: FontStyle.italic,
+                          color: const Color(0xffFFF893),
+                          fontWeight: FontWeight.w900),
+                    ),
+                    Center(
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Center(
+                            child: Image.asset(
+                              'assets/images/wheel_back_light.png',
+                              height: 450,
+                              width: 450,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Center(
+                            child: Stack(
+                              alignment: AlignmentDirectional.center,
                               children: [
-                                //  rewards = labels[selected.value];
-                                SpinningWheel(
-                                  Image.asset(
-                                    'assets/images/wheel_new.png',
-                                  ),
-                                  width: 310,
-                                  height: 310,
-                                  initialSpinAngle: _generateRandomAngle(),
-                                  spinResistance: 0.1,
-                                  canInteractWhileSpinning: false,
-                                  dividers: 16,
-                                  onUpdate: _dividerController.add,
-                                  onEnd: _dividerController.add,
-                                  secondaryImage: Image.asset(
-                                      'assets/images/wheel_click.png'),
-                                  secondaryImageHeight: 110,
-                                  secondaryImageWidth: 110,
-                                  shouldStartOrStop: _wheelNotifier.stream,
+                                Column(
+                                  children: [
+                                    //  rewards = labels[selected.value];
+                                    SpinningWheel(
+                                      Image.asset(
+                                        'assets/images/wheel_new.png',
+                                      ),
+                                      width: 310,
+                                      height: 310,
+                                      initialSpinAngle: _generateRandomAngle(),
+                                      spinResistance: 0.1,
+                                      canInteractWhileSpinning: false,
+                                      dividers: 16,
+                                      onUpdate: _dividerController.add,
+                                      onEnd: _dividerController.add,
+                                      secondaryImage: Image.asset(
+                                          'assets/images/wheel_click.png'),
+                                      secondaryImageHeight: 110,
+                                      secondaryImageWidth: 110,
+                                      shouldStartOrStop: _wheelNotifier.stream,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    StreamBuilder(
+                                      stream: _dividerController.stream,
+                                      builder: (context, snapshot) =>
+                                          snapshot.hasData
+                                              ? RouletteScore(
+                                                  snapshot.data,
+                                                )
+                                              : Container(),
+                                    ),
+                                    const SizedBox(height: 10),
+                                  ],
                                 ),
-                                const SizedBox(height: 10),
-                                StreamBuilder(
-                                  stream: _dividerController.stream,
-                                  builder: (context, snapshot) =>
-                                      snapshot.hasData
-                                          ? RouletteScore(
-                                              snapshot.data,
-                                            )
-                                          : Container(),
-                                ),
-                                const SizedBox(height: 10),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                isWheelSpinning
-                    ? Container()
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: NeoPopButton(
-                          color: Colors.red,
-                          onTapUp: isWheelSpinning
-                              ? null
-                              : () {
-                                  _wheelNotifier.sink
-                                      .add(_generateRandomVelocity());
-                                  // setState(() {
-                                  //   selected.add(
-                                  //     snapshot.data,
-                                  //   );
-                                  // });
-                                  HapticFeedback.vibrate();
-                                  startSpinning();
-                                },
-                          onTapDown: () => HapticFeedback.vibrate(),
-                          child: NeoPopShimmer(
-                            shimmerColor: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "SPIN",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge
-                                        ?.copyWith(color: Colors.white),
+                    ),
+                    isWheelSpinning
+                        ? Container()
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: NeoPopButton(
+                              color: Colors.red,
+                              onTapUp: isWheelSpinning
+                                  ? null
+                                  : () {
+                                      _wheelNotifier.sink
+                                          .add(_generateRandomVelocity());
+                                      // setState(() {
+                                      //   selected.add(
+                                      //     snapshot.data,
+                                      //   );
+                                      // });
+                                      HapticFeedback.vibrate();
+                                      startSpinning();
+                                    },
+                              onTapDown: () => HapticFeedback.vibrate(),
+                              child: NeoPopShimmer(
+                                shimmerColor: Colors.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "SPIN",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge
+                                            ?.copyWith(color: Colors.white),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
+                    SizedBox(
+                      height: sized.size.height * .01,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'One spin in just ',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5
+                              ?.copyWith(
+                                  color: const Color(0xffFFF893),
+                                  fontStyle: FontStyle.italic),
                         ),
-                      ),
-                SizedBox(
-                  height: sized.size.height * .01,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'One spin in just ',
-                      style: Theme.of(context).textTheme.headline5?.copyWith(
-                          color: const Color(0xffFFF893),
-                          fontStyle: FontStyle.italic),
-                    ),
-                    Image.asset(
-                      'assets/images/coin.png',
-                      scale: 20,
-                    ),
-                    Text(
-                      '25',
-                      style: Theme.of(context).textTheme.headline5?.copyWith(
-                          color: const Color(0xffFFF893),
-                          fontWeight: FontWeight.w900,
-                          fontStyle: FontStyle.italic),
+                        Image.asset(
+                          'assets/images/coin.png',
+                          scale: 20,
+                        ),
+                        Text(
+                          '25',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5
+                              ?.copyWith(
+                                  color: const Color(0xffFFF893),
+                                  fontWeight: FontWeight.w900,
+                                  fontStyle: FontStyle.italic),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+            AnimatedPositioned(
+              curve: Curves.easeInOut,
+              top: 0,
+              left: 0,
+              right: 50,
+              bottom: play ? 600 : 0,
+              duration: Duration(milliseconds: 500),
+              child: Center(
+                  child: Opacity(
+                opacity: play ? 1.0 : 0.0,
+                child: Text('+',
+                    style: theme.textTheme.headline2?.copyWith(
+                        fontFamily: 'BebasNeue',
+                        // fontStyle: FontStyle.italic,r
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+              )),
+            ),
+            Center(
+              child: Container(
+                width: 310,
+                height: 310,
+                color: Colors.transparent,
+              ),
+            )
+          ],
         ),
-        AnimatedPositioned(
-          curve: Curves.easeInOut,
-          top: 0,
-          left: 0,
-          right: 50,
-          bottom: play ? 600 : 0,
-          duration: Duration(milliseconds: 500),
-          child: Center(
-              child: Opacity(
-            opacity: play ? 1.0 : 0.0,
-            child: Text('+',
-                style: theme.textTheme.headline2?.copyWith(
-                    fontFamily: 'BebasNeue',
-                    // fontStyle: FontStyle.italic,r
-                    // fontWeight: FontWeight.bold,
-                    color: Colors.white)),
-          )),
-        )
-      ])),
+      ),
     );
   }
 
